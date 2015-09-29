@@ -2,71 +2,26 @@
 //
 
 'use strict'; // shouldn't be necessary for ES6
+//var logger = require('libraries/loglevel.js');
+//var checker = require('libraries/checkforliveness.js');
 
-// Promisified GET from http://www.html5rocks.com/en/tutorials/es6/promises/#toc-promise-terminology
-
-function getbare(url){
-  var req = new XMLHttpRequest();
-  gReq = req;
-  req.addEventListener("timeout",  nocompletion);   // timed out - presumably couldn't connect
-  req.addEventListener("load",     anycompletion);  // Got some kind of response back
-  req.addEventListener("error",    anycompletion);
-  req.addEventListener("abort",    anycompletion);
-  req.open('GET', url, true);
-  req.setRequestHeader('Access-Control-Allow-Origin', URLtoGet);
-  req.send();
-  return req;
-}
-
-
-function anycompletion(evt){
-  console.log (evt);
-}
-
-function nocompletion(evt){
-  console.log (evt);
-}
-
-function get(url) {
-  // Return a new promise.
-  return new Promise(function(resolve, reject) {
-    // Do the usual XHR stuff
-    var req = new XMLHttpRequest();
-    req.open('GET', url, true);
-    req.setRequestHeader('Access-Control-Allow-Origin', URLtoGet);
-
-    req.onload = function() {
-      // This is called even on 404 etc
-      // so check the status
-      if (req.status == 200) {
-        // Resolve the promise with the response text
-        resolve(req.response);
-      }
-      else {
-        // Otherwise reject with the status text
-        // which will hopefully be a meaningful error
-        reject(Error(req.statusText));
-      }
-    };
-
-    // Handle network errors
-    req.onerror = function() {
-      if (req.status == 405) {
-        resolve(req.response);
-      }
-      else {
-        reject(Error("Network Error"));
-      }
-    };
-
-    // Make the request
-    req.send();
-  });
-}
-
-var URLtoGet = "http://gstatic.com/";
+var HostToGet = "127.0.0.1";
+var PortToGet = "80";
 
 // var p = get("https://gfblip.appspot.com/mindelay?callback=?");
-// var p = get(URLtoGet);
+// var p = get(HostToGet);
 
-var gReq = getbare(URLtoGet);
+setInterval(CheckAllForLiveness, 10000 );
+
+function CheckAllForLiveness() {
+  var host = document.querySelector('input[name="adrs"]:checked').value;
+  CheckForLiveness(host, PortToGet);
+}
+
+logToWindow("\nStarting test...\n")
+function logToWindow(text) {
+  var textarea = document.getElementById("results");
+  var curtext = textarea.value;
+  var date = new Date().toLocaleString();
+  textarea.value = (curtext + date + " " + text);
+  }
