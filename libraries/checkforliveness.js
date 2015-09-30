@@ -11,16 +11,18 @@
 var mediator = (function(){
   var channels = [];
   var subscribe = function(channel, fn){
-        if (!mediator.channels[channel]) mediator.channels[channel] = [];
-        mediator.channels[channel].push({ context: this, callback: fn });
+        if (!channels[channel]) {
+          channels[channel] = [];
+        }
+        channels[channel].push({ context: this, callback: fn });
         return this;
       },
 
       publish = function(channel){
-        if (!mediator.channels[channel]) return false;
+        if (!channels[channel]) return false;
         var args = Array.prototype.slice.call(arguments, 1);
-        for (var i = 0, l = mediator.channels[channel].length; i < l; i++) {
-          var subscription = mediator.channels[channel][i];
+        for (var i = 0, l = channels[channel].length; i < l; i++) {
+          var subscription = channels[channel][i];
           subscription.callback.apply(subscription.context, args);
         }
         return this;
@@ -33,13 +35,13 @@ var mediator = (function(){
       obj.subscribe = subscribe;
       obj.publish = publish;
     },
-    CheckAllForLiveness: CheckAllForLiveness
+    CheckAllForLiveness: CheckAll,
   };
 
-  function CheckAllForLiveness(){
+  function CheckAll(){
     var l = channels.length;
     for (var i=0; i < l; i++) {
-      CheckForLiveness(mediator.channels[i]);
+      CheckForLiveness(channels[i]);
     }
   }
 
@@ -55,7 +57,7 @@ var mediator = (function(){
     req.addEventListener("error",    anycompletion);
     req.addEventListener("abort",    anycompletion);
     req.open('GET', url, true);                       // async http GET from host
-    req.timeout = 5000;                               // 5 sec timeout - long enough even for bufferbloat
+    req.timeout = 2000;                               // 2 sec timeout - long enough even for bufferbloat
     req.setRequestHeader('Access-Control-Allow-Origin', url);
     // req.setRequestHeader('Host', host);
     req.send();
@@ -76,5 +78,5 @@ var mediator = (function(){
 
 // Kick off all the excitement...
 
-setInterval(mediator.CheckAllForLiveness(), 10000);
+setInterval(mediator.CheckAllForLiveness, 5000);
 
