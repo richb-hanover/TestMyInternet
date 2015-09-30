@@ -11,12 +11,12 @@ var PortToGet = "80";
 // var p = get("https://gfblip.appspot.com/mindelay?callback=?");
 // var p = get(HostToGet);
 
-setInterval(CheckAllForLiveness, 10000 );
+// setInterval(CheckAllForLiveness, 10000 );
 
-function CheckAllForLiveness() {
-  var host = document.querySelector('input[name="adrs"]:checked').value;
-  CheckForLiveness(host, PortToGet);
-}
+//function CheckAllForLiveness() {
+//  var host = document.querySelector('input[name="adrs"]:checked').value;
+//  CheckForLiveness(host, PortToGet);
+//}
 
 logToWindow("\nStarting test...\n")
 function logToWindow(text) {
