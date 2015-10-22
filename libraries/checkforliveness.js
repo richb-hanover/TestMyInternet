@@ -40,8 +40,12 @@ var mediator = (function(){
 
   function CheckAll(){
     var l = channels.length;
-    for (var i=0; i < l; i++) {
-      CheckForLiveness(channels[i]);
+    //for (var i=0; i < l; i++) {
+    //  CheckForLiveness(channels[i]);
+    //}
+    for (var ch in channels)
+    {
+      CheckForLiveness(ch);
     }
   }
 
@@ -50,7 +54,7 @@ var mediator = (function(){
 //    response/error (most likely will give CORS error, which simply means it's up)
 //
   function CheckForLiveness(host_port){
-    var url = "http://" + host + "/";
+    var url = "http://" + host_port + "/";
     var req = new XMLHttpRequest();
     req.addEventListener("timeout",  nocompletion);   // timed out - presumably couldn't connect
     req.addEventListener("load",     anycompletion);  // Got some kind of response back

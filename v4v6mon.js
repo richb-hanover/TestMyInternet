@@ -8,15 +8,6 @@
 var HostToGet = "127.0.0.1";
 var PortToGet = "80";
 
-// var p = get("https://gfblip.appspot.com/mindelay?callback=?");
-// var p = get(HostToGet);
-
-// setInterval(CheckAllForLiveness, 10000 );
-
-//function CheckAllForLiveness() {
-//  var host = document.querySelector('input[name="adrs"]:checked').value;
-//  CheckForLiveness(host, PortToGet);
-//}
 
 logToWindow("\nStarting test...\n")
 function logToWindow(text) {
@@ -25,3 +16,12 @@ function logToWindow(text) {
   var date = new Date().toLocaleString();
   textarea.value = (curtext + date + " " + text);
   }
+
+function redgreen(obj){
+  var elem = documents.getElementById("statusarea");
+  elem.value = obj.state;
+}
+
+mediator.subscribe("gstatic.com:80", redgreen);
+mediator.subscribe("richb-hanover.com:80", redgreen);
+mediator.subscribe("127.0.0.10:80", redgreen);
