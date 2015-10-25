@@ -10,9 +10,19 @@ body {
     flex-direction: column;
 }
 
-#main {
+#wrapper > nav {
     display: flex;
-    flex-direction: row;
+}
+
+#hosts {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 300px;
+    /*flex-wrap: nowrap;*/
+}
+
+#article {
+    flex-grow: 1;
 }
 
 .fitem {
