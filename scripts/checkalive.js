@@ -10,14 +10,14 @@ export function CheckAlive(host_port) {
   return new Promise ( function(resolve,reject) {
     var url = "http://" + host_port + "/";
     var req = new XMLHttpRequest();
-    req.addEventListener("load",     () => {resolve('OK! ' + req.status)});  // Got some kind of response back
-    req.addEventListener("error",    () => {resolve('OK! ' + req.status)});
-    req.addEventListener("abort",    () => {resolve('OK! ' + req.status)});
-    req.addEventListener("timeout",  () => {reject ('Dang! '+ req.status)});              // timed out - presumably couldn't connect
+    req.addEventListener("load",     () => {resolve('OK  ')});  // Got some kind of response back
+    req.addEventListener("error",    () => {resolve('OK  ')});
+    req.addEventListener("abort",    () => {resolve('OK  ')});
+    req.addEventListener("timeout",  () => {reject ('Down')});  // timed out - presumably couldn't connect
 
-    logToWindow("About to send() to " + url);
+    //logToWindow("Testing " + url);
     req.open('GET', url, true);                       // async http GET from host
-    req.timeout = 2000;                               // 2 sec timeout - long enough even for bufferbloat
+    req.timeout = 3000;                               // 2 sec timeout - long enough even for bufferbloat
     req.setRequestHeader('Access-Control-Allow-Origin', url);
     req.send();
   })
