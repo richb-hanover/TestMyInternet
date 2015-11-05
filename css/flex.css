@@ -18,17 +18,19 @@ body {
     display: flex;
     flex-direction: column;
     flex-basis: 300px;
+    flex-shrink:1;
     /*flex-wrap: nowrap;*/
 }
 
 #article {
     flex-grow: 1;
+    flex_shrink: 1;
 }
 
 .fitem {
-    border: 3px solid #cccc33;
+    border: 1px dotted grey;
     border-radius: 7pt;
-    background: #dddd88;
+    background: white;
     margin: 1px;
     padding:10px;
 }
