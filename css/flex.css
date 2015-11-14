@@ -4,11 +4,11 @@ body {
     /*background: #999999;*/
 }
 
-#wrapper {
-    display: flex;
-    border: 10px solid goldenrod;
-    flex-direction: column;
-}
+/*#wrapper {*/
+    /*display: flex;*/
+    /*border: 10px solid goldenrod;*/
+    /*flex-direction: column;*/
+/*}*/
 
 #wrapper > nav {
     display: flex;
@@ -27,7 +27,7 @@ body {
     flex_shrink: 1;
 }
 
-.fitem {
+.fitem, #wrapper {
     border: 1px dotted grey;
     border-radius: 7pt;
     background: white;

@@ -28,7 +28,7 @@ gulp.task('styles',function() {
     .pipe(gulp.dest('build/css/fonts'))
 
   // Compiles CSS
-  gulp.src('css/style.styl')
+  gulp.src('css/flex.css')
     .pipe(stylus())
     .pipe(autoprefixer())
     .pipe(gulp.dest('./build/css/'))
@@ -84,7 +84,7 @@ function buildScript(file, watch) {
       // .pipe(buffer())
       // .pipe(uglify())
       // .pipe(rename('app.min.js'))
-      .pipe(gulp.dest('./build'))
+      // .pipe(gulp.dest('./build'))
       .pipe(reload({stream:true}))
   }
 
@@ -104,6 +104,6 @@ gulp.task('scripts', function() {
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['images','styles','scripts','browser-sync'], function() {
-  gulp.watch('css/**/*', ['styles']); // gulp watch for stylus changes
+  gulp.watch('css/*', ['styles']); // gulp watch for stylus changes
   return buildScript('v4v6mon.js', true); // browserify watch for JS changes
 });
