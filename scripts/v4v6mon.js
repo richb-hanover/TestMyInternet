@@ -2,9 +2,10 @@
 //
 
 import {CheckAlive} from "./checkalive.js";
+import {LogToWindow} from "./utilities.js";
 
-var HostToGet = "127.0.0.1";
-var PortToGet = "80";
+const HostToGet = "127.0.0.1";
+const PortToGet = "80";
 var p, hostList, headers;
 
 // set up temporary re-probe button
@@ -12,15 +13,8 @@ var p, hostList, headers;
 headers = document.getElementsByTagName("header");
 headers[0].onclick = () => CheckHosts();
 
-export function logToWindow(text) {
-  var textarea = document.getElementById("article");
-  var curtext = textarea.value;
-  var date = new Date().toLocaleString();
-  textarea.value = (curtext + date + " " + text + "\n");
-  }
-
 // We're starting up
-logToWindow("Starting test...");
+LogToWindow("Starting test...");
 
 CheckHosts();         // kick off the test
 
@@ -51,11 +45,11 @@ function CheckHost(aHost) {
 
 function UpdateDevice(aHost, text) {
 
-  var color;
-  if      (text == "OK   ") color = "green";
-  else if (text == "Abort") color = "yellow";
-  else if (text == "Down ") color = "red";
+  let color;
+  if      (text === "OK   ") color = "green";
+  else if (text === "Abort") color = "yellow";
+  else if (text === "Down ") color = "red";
   else color = "purple";
   aHost.style.backgroundColor = color;
-  logToWindow(text + aHost.innerHTML);
+  LogToWindow(text + aHost.innerHTML);
 }
