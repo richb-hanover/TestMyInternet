@@ -4,29 +4,24 @@
 import {CheckAlive} from "./checkalive.js";
 import {LogToWindow} from "./utilities.js";
 
-const HostToGet = "127.0.0.1";
-const PortToGet = "80";
-var p, hostList, headers;
+const CheckInterval = 30 * 1000; // msec
 
-// set up temporary re-probe button
-
-headers = document.getElementsByTagName("header");
+const headers = document.getElementsByTagName("header");
 headers[0].onclick = () => CheckHosts();
 
 // We're starting up
-LogToWindow("Starting test...");
+LogToWindow("Starting TestMyInter.net - Leave the window open");
 
 CheckHosts();         // kick off the test
 
 // queue up a test of all hosts every now and again
-setInterval (CheckHosts, 30*1000);    // every 30 sec
+setInterval (CheckHosts, CheckInterval);    // every 30 sec
 
 // find all the <host> elements on the page, iterate through them
 
 function CheckHosts() {
-  var hostList = document.getElementsByTagName("host");
-  var i;
-  for (i = 0; i < hostList.length; i++) {
+  const hostList = document.getElementsByTagName("host");
+  for (let i = 0; i < hostList.length; i++) {
     CheckHost(hostList[i]);
   }
 }
@@ -35,7 +30,7 @@ function CheckHosts() {
 
 function CheckHost(aHost) {
 
-  var hostName = aHost.innerHTML;
+  const hostName = aHost.innerHTML;
 
   CheckAlive(hostName + ":80")
     .then(
@@ -47,9 +42,9 @@ function UpdateDevice(aHost, text) {
 
   let color;
   const curColor = aHost.style.backgroundColor;
-  if      (text.indexOf("OK:") == 0)    color = "green";
-  else if (text.indexOf("Abort:") == 0) color = "yellow";
-  else if (text.indexOf("Down:") == 0) color = "red";
+  if      (text.indexOf("OK:") === 0)    color = "green";
+  else if (text.indexOf("Abort:") === 0) color = "yellow";
+  else if (text.indexOf("Down:") === 0)  color = "red";
   else color = "purple";
   aHost.style.backgroundColor = color;
   if (color !== curColor) {
