@@ -19,7 +19,7 @@ LogToWindow("Starting test...");
 CheckHosts();         // kick off the test
 
 // queue up a test of all hosts every now and again
-setInterval (CheckHosts, 3*60*1000);
+setInterval (CheckHosts, 30*1000);    // every 30 sec
 
 // find all the <host> elements on the page, iterate through them
 
@@ -46,10 +46,13 @@ function CheckHost(aHost) {
 function UpdateDevice(aHost, text) {
 
   let color;
-  if      (text === "OK   ") color = "green";
-  else if (text === "Abort") color = "yellow";
-  else if (text === "Down ") color = "red";
+  const curColor = aHost.style.backgroundColor;
+  if      (text.indexOf("OK:") == 0)    color = "green";
+  else if (text.indexOf("Abort:") == 0) color = "yellow";
+  else if (text.indexOf("Down:") == 0) color = "red";
   else color = "purple";
   aHost.style.backgroundColor = color;
-  LogToWindow(text + aHost.innerHTML);
+  if (color !== curColor) {
+    LogToWindow(text + aHost.innerHTML);
+  }
 }

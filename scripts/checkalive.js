@@ -8,16 +8,16 @@ import {LogToWindow} from "./utilities.js";
 export function CheckAlive(host_port) {
 
   return new Promise(function (resolve, reject) {
-    var t;
-    var url = "http://" + host_port + "/";
+    const myurl = encodeURI('http://test.richb-hanover.com/TestMyInternet/');
+    const url = "http://" + host_port + "/?page="+ myurl;
 
     var req = new XMLHttpRequest();
-    req.addEventListener("load"   , () => { resolve('OK   ') });    // Got some kind of response back
-    req.addEventListener("error"  , () => { resolve('OK   ') });    // CORS errors show the server is there
-    req.addEventListener("abort"  , () => { resolve('Abort') });    // Somebody aborted test (don't know how)
-    req.addEventListener("timeout", () => { reject ('Down ' ) });   // timed out - presumably couldn't connect
+    req.addEventListener("load"   , () => { resolve('OK:    ') });    // Got some kind of response back
+    req.addEventListener("error"  , () => { resolve('OK:    ') });    // CORS errors show the server is there
+    req.addEventListener("abort"  , () => { resolve('Abort: ') });    // Somebody aborted test (don't know how)
+    req.addEventListener("timeout", () => { reject ('Down:  ') });   // timed out - presumably couldn't connect
 
-    LogToWindow("Testing " + url);
+    // LogToWindow("Testing " + url);
     req.open('GET', url, true);                         // async http GET from host
     req.timeout = 5 * 1000;                             // timeout - make long enough even for bufferbloat
     req.send();

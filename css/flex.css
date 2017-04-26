@@ -30,9 +30,14 @@ body {
 .fitem, #wrapper {
     border: 1px dotted grey;
     border-radius: 7pt;
-    background: white;
+    /*background: white;*/
     margin: 1px;
     padding:10px;
+}
+
+header {
+    background: blue;
+    color: white;
 }
 
 /*#main > article {*/
