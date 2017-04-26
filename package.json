@@ -4,7 +4,9 @@
   "description": "Monitor a set of IPv4 & IPv6 hosts/addresses from a SPA",
   "main": "v4v6mon.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp",
+    "build": "gulp sass"
   },
   "author": "Rich Brown - richb.hanover@gmail.com",
   "license": "MIT",
