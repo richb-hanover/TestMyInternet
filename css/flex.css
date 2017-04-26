@@ -28,8 +28,8 @@ body {
 }
 
 .fitem, #wrapper {
-    border: 1px dotted grey;
-    border-radius: 7pt;
+    /*border: 1px dotted grey;*/
+    /*border-radius: 7pt;*/
     /*background: white;*/
     margin: 1px;
     padding:10px;
@@ -40,6 +40,9 @@ header {
     color: white;
 }
 
+textarea {
+    border: 0;
+}
 /*#main > article {*/
     /*margin: 4px;*/
     /*padding: 5px;*/
@@ -108,3 +111,4 @@ header {
 }
 
 /* spinner.gif is from loading.io: 24 px; 10 points; speed 1; */
+/* Google Material Design - Color Guidelines https://material.io/guidelines/style/color.html#color-color-palette */
