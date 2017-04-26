@@ -36,7 +36,7 @@ body {
 }
 
 header {
-    background: blue;
+    background: #2196f3; /* material.io 500 blue */
     color: white;
 }
 
@@ -104,4 +104,5 @@ header {
         min-height: 50px;
         max-height: 50px;
     }
+
 }

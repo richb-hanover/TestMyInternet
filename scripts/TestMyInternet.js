@@ -1,7 +1,7 @@
 // First cut at monitoring websites from a web page application
 //
 
-import {LogToWindow} from "./utilities.js";
+import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
 
 const CheckInterval = 30 * 1000; // msec
 const requestTimeout = 5 * 1000; // msec
@@ -10,11 +10,13 @@ const spinnerTimeout = 3 * 1000; // msec
 const headers = document.getElementsByTagName("header");
 headers[0].onclick = () => {
   LogToWindow("Manual check...");
+  consolelog("Manual check...");
   CheckHosts();
 };
 
 // We're starting up
 LogToWindow("Starting TestMyInter.net - Leave the window open");
+consolelog("Starting test");
 
 CheckHosts();         // kick off the test
 
@@ -51,12 +53,15 @@ function CheckHost(aHost) {
 function UpdateDevice(aHost, text, status) {
 
   let color;
-  const curColor = aHost.style.backgroundColor;
+  let curColor = aHost.style.backgroundColor;
+  if (curColor) {
+    curColor = rgb2hex(curColor);
+  }
   const hostName = aHost.innerHTML;
-  if      (text.indexOf("OK:") === 0)    color = "green";
-  else if (text.indexOf("Abort:") === 0) color = "yellow";
-  else if (text.indexOf("Down:") === 0)  color = "red";
-  else color = "purple";
+  if      (text.indexOf("OK:") === 0)    color = "#4caf50"; // material.io 500 green
+  else if (text.indexOf("Abort:") === 0) color = "#ffeb3b"; // material.io 500 yellow
+  else if (text.indexOf("Down:") === 0)  color = "#f44336"; // material.io 500 red
+  else color = "#9c27b0";                                   // material.io 500 purple
   aHost.style.backgroundColor = color;
   if (color !== curColor) {
     LogToWindow(text + aHost.innerHTML);
@@ -64,7 +69,7 @@ function UpdateDevice(aHost, text, status) {
  }
   // if (hostName === "192.168.0.1" && color === "green") {
   // }
-  console.log(`${hostName} returned: "${text}", ${status}`);
+  consolelog(`${hostName} returned: "${text}", ${status}`);
 }
 
 // Play a short beep
@@ -87,7 +92,7 @@ function CheckAlive(host_port) {
   const timerPromise = new Promise((resolve, reject) => {
     let id = setTimeout(() => {
       clearTimeout(id);
-      req.abort();                              // abort it so it doesn't re-surface later
+      req.abort();                              // abort the reqPromise so it doesn't re-surface later
       reject('Down: timeout ');
     }, requestTimeout);
   });
