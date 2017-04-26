@@ -99,11 +99,11 @@ function buildScript(file, watch) {
 }
 
 gulp.task('scripts', function() {
-  return buildScript('v4v6mon.js', false); // this will run once because we set watch to false
+  return buildScript('TestMyInternet.js', false); // this will run once because we set watch to false
 });
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['images','styles','scripts','browser-sync'], function() {
   gulp.watch('css/*', ['styles']); // gulp watch for stylus changes
-  return buildScript('v4v6mon.js', true); // browserify watch for JS changes
+  return buildScript('TestMyInternet.js', true); // browserify watch for JS changes
 });
