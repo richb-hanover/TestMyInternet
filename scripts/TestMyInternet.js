@@ -4,8 +4,8 @@
 import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
 
 const CheckInterval = 30 * 1000; // msec
-const requestTimeout = 5 * 1000; // msec
-const spinnerTimeout = 3 * 1000; // msec
+const requestTimeout = 4 * 1000; // msec
+const spinnerTimeout = 5 * 1000; // msec - must be greater than requestTimeout
 
 const headers = document.getElementsByTagName("header");
 headers[0].onclick = () => {
@@ -28,6 +28,10 @@ setInterval (CheckHosts, CheckInterval);    // every 30 sec
 function CheckHosts() {
 
   const spinner = document.getElementById("spinner");
+  if (spinner.style.visibility === "visible") {
+    consolelog("Already testing...");
+    return;
+  }
   spinner.style.visibility = "visible";
   setTimeout(() => { spinner.style.visibility = "hidden"; }, spinnerTimeout);
 
