@@ -35,6 +35,29 @@ body {
     padding:10px;
 }
 
+/* See flexbox.io #16 for some of these tricks */
+.slider-nav ul {
+    /*border: 1px dotted grey;*/
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+}
+.slider-nav li {
+    flex: 1;
+    /*border: 1px solid red;*/
+    text-align: center;
+    background: lightgrey;
+}
+.slider-nav a {
+    display: block;
+    width: 100%;
+}
+.slider-nav a:hover {
+    background: rgba(0,0,0,0.4);
+}
+
 header {
     background: #2196f3; /* material.io 500 blue */
     color: white;

@@ -1,8 +1,8 @@
 {
-  "name": "v4v6mon",
-  "version": "0.0.1",
-  "description": "Monitor a set of IPv4 & IPv6 hosts/addresses from a SPA",
-  "main": "v4v6mon.js",
+  "name": "TestMyInternet",
+  "version": "0.1",
+  "description": "Monitor a set of hosts/addresses from a SPA",
+  "main": "TestMyInternet.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "gulp",
