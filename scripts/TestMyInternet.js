@@ -30,32 +30,45 @@ function CheckHosts() {
   const spinner = document.getElementById("spinner");
   if (spinner.style.visibility === "visible") {
     consolelog("Already testing...");
-    return;
   }
   spinner.style.visibility = "visible";
   setTimeout(() => { spinner.style.visibility = "hidden"; }, spinnerTimeout);
 
   const hostList = document.getElementsByTagName("host");
   for (let i = 0; i < hostList.length; i++) {
-    CheckHost(hostList[i]);
+    const hostName = hostList[i].innerHTML;
+    CheckHost(hostName)
+      .always((jqXHROrData, textStatus, jqXHROrErrorThrown) =>    {
+        consolelog(`In completion: textStatus is: ${textStatus}`);
+        UpdateDevice(hostList[i], textStatus);
+      });
+
   }
 }
 
-// CheckHost - aHost is a DOM element; get its text, then set the background color
+// CheckHost - hostName is the name/IPaddress
+//  Return: ajax function that will complete in caller
 
-function CheckHost(aHost) {
+function CheckHost(hostName) {
 
-  const hostName = aHost.innerHTML;
+  const url = `http://${hostName}:80/`;
 
-  CheckAlive(hostName + ":80")
-    .then(
-      (msg) => UpdateDevice(aHost, msg, "Success"),
-      (err) => UpdateDevice(aHost, err, "Timeout"))
-    .catch((err) => UpdateDevice(aHost, err, "Catch"));
+  return $.ajax({
+    url: url,
+    crossDomain: false,
+    timeout: requestTimeout,
+    data: {
+      name : "http://TestMyInter.net"
+    }
+  })
 }
 
-function UpdateDevice(aHost, text, status) {
+function UpdateDevice(aHost, status) {
 
+  let text = "OK:";
+  if (status === 'timeout') {
+    text = "Down:";
+  }
   let color;
   let curColor = aHost.style.backgroundColor;
   if (curColor) {
