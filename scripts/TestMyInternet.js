@@ -4,7 +4,7 @@
 import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
 
 const CheckInterval = 30 * 1000; // msec
-const requestTimeout = 4 * 1000; // msec
+const requestTimeout = 6 * 1000; // msec
 const spinnerTimeout = 5 * 1000; // msec - must be greater than requestTimeout
 
 const headers = document.getElementsByTagName("header");
@@ -30,6 +30,7 @@ function CheckHosts() {
   const spinner = document.getElementById("spinner");
   if (spinner.style.visibility === "visible") {
     consolelog("Already testing...");
+    return;
   }
   spinner.style.visibility = "visible";
   setTimeout(() => { spinner.style.visibility = "hidden"; }, spinnerTimeout);
@@ -39,7 +40,7 @@ function CheckHosts() {
     const hostName = hostList[i].innerHTML;
     CheckHost(hostName)
       .always((jqXHROrData, textStatus, jqXHROrErrorThrown) =>    {
-        consolelog(`In completion: textStatus is: ${textStatus}`);
+        // consolelog(`In completion: textStatus is: ${textStatus}`);
         UpdateDevice(hostList[i], textStatus);
       });
 
@@ -57,6 +58,7 @@ function CheckHost(hostName) {
     url: url,
     crossDomain: false,
     timeout: requestTimeout,
+    cache: false,
     data: {
       name : "http://TestMyInter.net"
     }
@@ -65,9 +67,9 @@ function CheckHost(hostName) {
 
 function UpdateDevice(aHost, status) {
 
-  let text = "OK:";
+  let text = "OK:   ";
   if (status === 'timeout') {
-    text = "Down:";
+    text = "Down: ";
   }
   let color;
   let curColor = aHost.style.backgroundColor;
