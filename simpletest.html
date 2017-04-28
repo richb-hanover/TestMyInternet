@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <link rel="stylesheet" type="text/css" href="./build/css/flex.css"> -->
+    <title>Test XHR Premature Timeout</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style></head>
+<body>
+    <h1>Test XHR Premature Timeout</h1>
+
+    <i>In response to <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3">https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3</a></i>
+
+    <p>Enter an address that won't answer:
+        <input type=text id="address" value="http://123.45.67.89" /> (good choice: <i>http://123.45.67.89</i>)
+        <br /><br />
+        The code will continually send an XMLHttpRequest to it with a long timeout.
+        Open the Console to monitor its progess, and the events surrounding its operation.
+    </p>
+
+    <script>
+
+      const checkInterval = 10 * 1000;
+      const requestTimeout = 6 * 1000;
+      let startTime = new Date();
+
+      CheckAlive();
+      setInterval (CheckAlive, checkInterval);
+
+      function LogCompletion(text) {
+        const endTime = new Date();
+        const elapsed = endTime - startTime;
+        console.log(`Elapsed: ${elapsed} msec; Status was: ${text} `);
+      }
+
+      function CheckAlive() {
+
+        const host = document.getElementById('address').value;
+        // console.log(`Called CheckAlive: ${host} timeout is ${requestTimeout} msec`);
+
+        const req = new XMLHttpRequest();             // this is the request we'll use to test host_port
+
+        req.addEventListener("load"   , () => { LogCompletion('load') });    // Got some kind of response back
+        req.addEventListener("error"  , () => { LogCompletion('error - did we get net::ERR_CONNECTION_TIMED_OUT?')  });    // CORS errors show the server is there
+        req.addEventListener("abort"  , () => { LogCompletion('abort')  });    // Somebody aborted test (don't know how)
+        req.addEventListener("timeout", () => { LogCompletion("timeout from addEventListener - That's OK!")  });    // timed out - presumably couldn't connect
+
+        // LogToWindow("Testing " + url);
+        req.open('GET', host, true);                        // async http GET from host
+        req.timeout = requestTimeout;                       // long-ish timer
+        req.ontimeout = (e) => { LogCompletion("timeout from ontimeout - That's OK!")};
+        startTime = new Date();
+        req.send();
+      }
+
+    </script>
+
+</body>
+</html>

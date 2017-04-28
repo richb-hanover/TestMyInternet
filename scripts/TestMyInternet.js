@@ -3,7 +3,7 @@
 
 import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
 
-const CheckInterval = 30 * 1000; // msec
+const checkInterval = 30 * 1000; // msec
 const requestTimeout = 6 * 1000; // msec
 const spinnerTimeout = 5 * 1000; // msec - must be greater than requestTimeout
 
@@ -16,12 +16,12 @@ headers[0].onclick = () => {
 
 // We're starting up
 LogToWindow("Starting TestMyInter.net - Leave the window open");
-consolelog("Starting test");
+consolelog(`Starting test (timeout = ${requestTimeout})`);
 
 CheckHosts();         // kick off the test
 
 // queue up a test of all hosts every now and again
-setInterval (CheckHosts, CheckInterval);    // every 30 sec
+setInterval (CheckHosts, checkInterval);    // every 30 sec
 
 // find all the <host> elements on the page, iterate through them
 
@@ -52,13 +52,11 @@ function CheckHosts() {
 
 function CheckHost(hostName) {
 
-  const url = `http://${hostName}:80/`;
-
   return $.ajax({
-    url: url,
+    url: `http://${hostName}:80/`,
     crossDomain: false,
     timeout: requestTimeout,
-    cache: false,
+    // cache: false,
     data: {
       name : "http://TestMyInter.net"
     }

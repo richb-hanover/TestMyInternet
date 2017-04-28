@@ -5,6 +5,7 @@ export function LogToWindow(text) {
   const curtext = textarea.value;
   const date = new Date().toLocaleString();
   textarea.value = (curtext + date + " " + text + "\n");
+  textarea.scrollTop = textarea.scrollHeight;
 }
 
 // consolelog() - log data with time stamp to console.log
