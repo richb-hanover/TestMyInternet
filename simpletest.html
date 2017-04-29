@@ -20,6 +20,7 @@
         Open the Console to monitor its progess, and the events surrounding its operation.
     </p>
     <h3>Counts of error status</h3>
+    <h4 id="browserid"></h4>
     <ul>
         <li>Load: <span id="load"></span></li>
         <li>Error: <span id="error"></span> (Bad!)</li>
@@ -27,7 +28,7 @@
         <li>Timeout: <span id="timeout"></span> (Good!)</li>
     </ul>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.12/ua-parser.min.js"></script>
     <script>
         const counts = {
           load: 0,
@@ -35,10 +36,15 @@
           abort: 0,
           timeout: 0
         };
-      const checkInterval = 10 * 1000;
-      const requestTimeout = 6 * 1000;
-      let startTime = new Date();
+        const checkInterval = 10 * 1000;
+        const requestTimeout = 6 * 1000;
+        var startTime = new Date();
+        var parser = new UAParser();
+        var browserInfo = parser.getResult();
+        var browserID = browserInfo.browser.name + " " + browserInfo.browser.version;
+        browserID += " (" + browserInfo.os.name + " " + browserInfo.os.version + ")";
 
+      document.getElementById('browserid').innerHTML = browserID;
       CheckAlive();
       setInterval (CheckAlive, checkInterval);
 
@@ -71,8 +77,6 @@
         startTime = new Date();
         req.send();
       }
-
     </script>
-
 </body>
 </html>
