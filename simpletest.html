@@ -45,7 +45,7 @@
       function LogCompletion(text) {
         const endTime = new Date();
         const elapsed = endTime - startTime;
-        console.log(`Elapsed: ${elapsed} msec; Status was: ${text} `);
+        console.log("Elapsed: " + elapsed + " msec; Status was: " + text);
         counts[text] += 1;
         for (let prop in counts){
             document.getElementById(prop).innerHTML = counts[prop];
@@ -55,7 +55,7 @@
       function CheckAlive() {
 
         const host = document.getElementById('address').value;
-        // console.log(`Called CheckAlive: ${host} timeout is ${requestTimeout} msec`);
+//         console.log("Called CheckAlive: "+host + "timeout is "+ requestTimeout +" msec");
 
         const req = new XMLHttpRequest();             // this is the request we'll use to test host_port
 
