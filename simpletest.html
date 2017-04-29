@@ -19,9 +19,22 @@
         The code will continually send an XMLHttpRequest to it with a long timeout.
         Open the Console to monitor its progess, and the events surrounding its operation.
     </p>
+    <h3>Counts of error status</h3>
+    <ul>
+        <li>Load: <span id="load"></span></li>
+        <li>Error: <span id="error"></span> (Bad!)</li>
+        <li>Abort: <span id="abort"></span></li>
+        <li>Timeout: <span id="timeout"></span> (Good!)</li>
+    </ul>
+
 
     <script>
-
+        const counts = {
+          load: 0,
+          error: 0,
+          abort: 0,
+          timeout: 0
+        };
       const checkInterval = 10 * 1000;
       const requestTimeout = 6 * 1000;
       let startTime = new Date();
@@ -33,6 +46,10 @@
         const endTime = new Date();
         const elapsed = endTime - startTime;
         console.log(`Elapsed: ${elapsed} msec; Status was: ${text} `);
+        counts[text] += 1;
+        for (let prop in counts){
+            document.getElementById(prop).innerHTML = counts[prop];
+        }
       }
 
       function CheckAlive() {
@@ -43,14 +60,14 @@
         const req = new XMLHttpRequest();             // this is the request we'll use to test host_port
 
         req.addEventListener("load"   , () => { LogCompletion('load') });    // Got some kind of response back
-        req.addEventListener("error"  , () => { LogCompletion('error - did we get net::ERR_CONNECTION_TIMED_OUT?')  });    // CORS errors show the server is there
+        req.addEventListener("error"  , () => { LogCompletion('error')  });    // CORS errors show the server is there
         req.addEventListener("abort"  , () => { LogCompletion('abort')  });    // Somebody aborted test (don't know how)
-        req.addEventListener("timeout", () => { LogCompletion("timeout from addEventListener - That's OK!")  });    // timed out - presumably couldn't connect
+        req.addEventListener("timeout", () => { LogCompletion("timeout")  });    // timed out - presumably couldn't connect
 
         // LogToWindow("Testing " + url);
         req.open('GET', host, true);                        // async http GET from host
         req.timeout = requestTimeout;                       // long-ish timer
-        req.ontimeout = (e) => { LogCompletion("timeout from ontimeout - That's OK!")};
+        req.ontimeout = (e) => { console.log("timeout from ontimeout - That's OK!")};
         startTime = new Date();
         req.send();
       }
