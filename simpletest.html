@@ -11,13 +11,20 @@
 <body>
     <h1>Test XHR Premature Timeout</h1>
 
-    <i>In response to <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3">https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3</a></i>
-
-    <p>Enter an address that won't answer:
-        <input type=text id="address" value="http://123.45.67.89" /> (good choice: <i>http://123.45.67.89</i>)
-        <br /><br />
-        The code will continually send an XMLHttpRequest to it with a long timeout.
-        Open the Console to monitor its progess, and the events surrounding its operation.
+    <p>
+        This code will continually send an XMLHttpRequest to a host with a long timeout.
+        Open the Console to monitor its progress, and the events surrounding its operation.
+    </p>
+    <p>
+        Demo code created in response to <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3">https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3</a></i>
+    <ul>
+        <li>Enter an address that won't answer:
+            <input type=text id="addressStr" value="http://123.45.67.89" /> (good choice: <i>http://123.45.67.89</i>)
+        </li>
+        <li>
+            Enter a timeout: <input type=text id="timeoutStr" value="6000" /> <i>msec</i>
+        </li>
+    </ul>
     </p>
     <h3>Counts of error status</h3>
     <h4 id="browserid"></h4>
@@ -60,20 +67,24 @@
 
       function CheckAlive() {
 
-        const host = document.getElementById('address').value;
-//         console.log("Called CheckAlive: "+host + "timeout is "+ requestTimeout +" msec");
+        const host = document.getElementById('addressStr').value;
+        const timeout = document.getElementById('timeoutStr').value;
+        const userTimeout = parseInt(timeout);
+
+//        console.log("Called CheckAlive: "+host + "timeout is "+ userTimeout +" msec");
 
         const req = new XMLHttpRequest();             // this is the request we'll use to test host_port
 
         req.addEventListener("load"   , function() { LogCompletion('load') });    // Got some kind of response back
         req.addEventListener("error"  , function() { LogCompletion('error')  });    // CORS errors show the server is there
         req.addEventListener("abort"  , function() { LogCompletion('abort')  });    // Somebody aborted test (don't know how)
-        req.addEventListener("timeout", function() { LogCompletion("timeout")  });    // timed out - presumably couldn't connect
+        req.addEventListener("timeout", function() { LogCompletion('timeout')  });    // timed out - presumably couldn't connect
 
         // LogToWindow("Testing " + url);
         req.open('GET', host, true);                        // async http GET from host
-        req.timeout = requestTimeout;                       // long-ish timer
-        req.ontimeout = (e) => { console.log("timeout from ontimeout - That's OK!")};
+        req.timeout = userTimeout;                       // long-ish timer
+        // 'ontimeout' events seem always to be paired with addEventListener 'timeout' events, so comment this out
+//        req.ontimeout = (e) => { console.log("timeout from ontimeout - That's OK!")};
         startTime = new Date();
         req.send();
       }

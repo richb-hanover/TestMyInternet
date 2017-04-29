@@ -4,7 +4,7 @@
 import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
 
 const checkInterval = 30 * 1000; // msec
-const requestTimeout = 6 * 1000; // msec
+const requestTimeout =     1000; // msec
 const spinnerTimeout = 5 * 1000; // msec - must be greater than requestTimeout
 
 const headers = document.getElementsByTagName("header");
