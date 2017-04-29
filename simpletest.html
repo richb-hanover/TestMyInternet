@@ -59,10 +59,10 @@
 
         const req = new XMLHttpRequest();             // this is the request we'll use to test host_port
 
-        req.addEventListener("load"   , () => { LogCompletion('load') });    // Got some kind of response back
-        req.addEventListener("error"  , () => { LogCompletion('error')  });    // CORS errors show the server is there
-        req.addEventListener("abort"  , () => { LogCompletion('abort')  });    // Somebody aborted test (don't know how)
-        req.addEventListener("timeout", () => { LogCompletion("timeout")  });    // timed out - presumably couldn't connect
+        req.addEventListener("load"   , function() { LogCompletion('load') });    // Got some kind of response back
+        req.addEventListener("error"  , function() { LogCompletion('error')  });    // CORS errors show the server is there
+        req.addEventListener("abort"  , function() { LogCompletion('abort')  });    // Somebody aborted test (don't know how)
+        req.addEventListener("timeout", function() { LogCompletion("timeout")  });    // timed out - presumably couldn't connect
 
         // LogToWindow("Testing " + url);
         req.open('GET', host, true);                        // async http GET from host
