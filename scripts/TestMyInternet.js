@@ -46,16 +46,13 @@ function AddHost(hostStr) {
 function AddRouter() {
   GetLocalIP()
     .then ((ip) => {
-      console.log(`GetLocalIP() returned "${ip}"`);
       let segments = ip.split(".");
-      console.log(`Segments: ${segments}`);
       segments[3] = "1";
       const routerIP = segments.join(".");
-      console.log(`RouterIP is ${routerIP}`);
       AddHost(routerIP);
     })
     .then (() => {
-      UpdateHosts();         // kick off the test
+      UpdateHosts();         // kick off the test run
     })
     .catch ((e) => {
     console.log(`GetLocalIP returned error: ${e}`);
