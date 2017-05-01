@@ -7,6 +7,10 @@
         body {
             font-family: sans-serif;
         }
+        td, th {
+            text-align: right;
+            padding: 4px;
+        }
     </style></head>
 <body>
     <h1>Test XHR Premature Timeout</h1>
@@ -26,14 +30,15 @@
         </li>
     </ul>
     </p>
-    <h3>Counts of error status</h3>
-    <h4 id="browserid"></h4>
-    <ul>
-        <li>Load: <span id="load"></span></li>
-        <li>Error: <span id="error"></span> (Bad!)</li>
-        <li>Abort: <span id="abort"></span></li>
-        <li>Timeout: <span id="timeout"></span> (Good!)</li>
-    </ul>
+    <h3 id="browserid"></h3>
+    <h4>Counts of error status & and recent elapsed times</h4>
+    <table>
+        <tr><th>Event</th>   <th>Count</th>         <th>Recent msec</th></tr>
+        <tr><td>Load:</td>   <td id="load"></td>    <td id="loadelapsed">       </td></tr>
+        <tr><td>Error:</td>  <td id="error"></td>   <td id="errorelapsed">      </td></tr>
+        <tr><td>Abort:</td>  <td id="abort"></td>   <td id="abortelapsed">      </td></tr>
+        <tr><td>Timeout:</td><td id="timeout"></td> <td id="timeoutelapsed">    </td></tr>
+    </table>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.12/ua-parser.min.js"></script>
     <script>
@@ -43,6 +48,13 @@
           abort: 0,
           timeout: 0
         };
+        const recentElapsed = {
+          load: 0,
+          error: 0,
+          abort: 0,
+          timeout: 0
+        };
+
         const checkInterval = 10 * 1000;
         const requestTimeout = 6 * 1000;
         var startTime = new Date();
@@ -60,8 +72,10 @@
         const elapsed = endTime - startTime;
         console.log("Elapsed: " + elapsed + " msec; Status was: " + text);
         counts[text] += 1;
+        recentElapsed[text] = elapsed;
         for (let prop in counts){
-            document.getElementById(prop).innerHTML = counts[prop];
+          document.getElementById(prop).innerHTML = counts[prop];
+          document.getElementById(prop+'elapsed').innerHTML = recentElapsed[prop].toString();
         }
       }
 
