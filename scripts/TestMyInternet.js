@@ -2,30 +2,69 @@
 //
 
 import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
+import { CheckHost, GetLocalIP  } from "./network.js";
 
 const checkInterval = 30 * 1000; // msec
-const requestTimeout =     1000; // msec
-const spinnerTimeout = 5 * 1000; // msec - must be greater than requestTimeout
+const spinnerTimeout = 3 * 1000; // msec
+let localIP = "";
 
 const headers = document.getElementsByTagName("header");
 headers[0].onclick = () => {
   LogToWindow("Manual check...");
   consolelog("Manual check...");
-  CheckHosts();
+  UpdateHosts();
 };
 
 // We're starting up
 LogToWindow("Starting TestMyInter.net - Leave the window open");
-consolelog(`Starting test (timeout = ${requestTimeout})`);
 
-CheckHosts();         // kick off the test
+AddInitialHosts();
+AddRouter();
 
 // queue up a test of all hosts every now and again
-setInterval (CheckHosts, checkInterval);    // every 30 sec
+setInterval (UpdateHosts, checkInterval);    // every 30 sec
 
+// AddInitialHosts() - make a list of <host> elements on the page to start
+function AddInitialHosts() {
+  let initialHosts = [
+    'google.com',
+    '123.45.67.89'
+  ];
+  initialHosts.forEach((elem) => AddHost(elem));
+}
+
+// AddHost(host_to_add) - add a <host> element to the page, as a child of the <hosts> div
+function AddHost(hostStr) {
+  const hosts = document.getElementById('hosts');
+  const host = document.createElement('host');
+  host.innerHTML = hostStr;
+  host.classList.add("fitem");
+  hosts.appendChild(host);
+}
+
+// AddRouter() - request the local IP address, divine the router's address (".1"), and add it
+function AddRouter() {
+  GetLocalIP()
+    .then ((ip) => {
+      console.log(`GetLocalIP() returned "${ip}"`);
+      let segments = ip.split(".");
+      console.log(`Segments: ${segments}`);
+      segments[3] = "1";
+      const routerIP = segments.join(".");
+      console.log(`RouterIP is ${routerIP}`);
+      AddHost(routerIP);
+    })
+    .then (() => {
+      UpdateHosts();         // kick off the test
+    })
+    .catch ((e) => {
+    console.log(`GetLocalIP returned error: ${e}`);
+  })
+}
+
+// UpdateHosts() - test all the hosts, and update their status
 // find all the <host> elements on the page, iterate through them
-
-function CheckHosts() {
+function UpdateHosts() {
 
   const spinner = document.getElementById("spinner");
   if (spinner.style.visibility === "visible") {
@@ -45,22 +84,6 @@ function CheckHosts() {
       });
 
   }
-}
-
-// CheckHost - hostName is the name/IPaddress
-//  Return: ajax function that will complete in caller
-
-function CheckHost(hostName) {
-
-  return $.ajax({
-    url: `http://${hostName}:80/`,
-    crossDomain: false,
-    timeout: requestTimeout,
-    // cache: false,
-    data: {
-      name : "http://TestMyInter.net"
-    }
-  })
 }
 
 function UpdateDevice(aHost, status) {
