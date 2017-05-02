@@ -59,9 +59,10 @@
           timeout: 0
         };
 
-        var checkInterval = 20 * 1000;
+        var checkInterval = 60 * 1000;
         var requestTimeout = 6 * 1000;
         var startTime = new Date();
+        var timer;
         var parser = new UAParser();
         var browserInfo = parser.getResult();
         var browserID = browserInfo.browser.name + " " + browserInfo.browser.version;
@@ -75,6 +76,9 @@
       function LogCompletion(text) {
         var endTime = new Date();
         var elapsed = endTime - startTime;
+        if (timer) {
+          clearTimeout(timer);
+        }
         console.log("Elapsed: " + elapsed + " msec; Status was: " + text);
         counts[text] += 1;
         recentElapsed[text] = elapsed;
@@ -97,7 +101,7 @@
         req.onabort   = function (e) { LogCompletion('abort')  };
         req.ontimeout = function (e) { LogCompletion('timeout')  };
         startTime = new Date();
-        setTimeout(function () {
+        timer = setTimeout(function () {
           console.log("xhr setTimeout aborting: "+req.readyState);
           LogCompletion('abort');
           req.onload = undefined;           // clear out all our request handlers
