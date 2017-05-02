@@ -98,7 +98,7 @@
         req.ontimeout = function (e) { LogCompletion('timeout')  };
         startTime = new Date();
         setTimeout(function () {
-          console.log(`xhr setTimeout aborting: ${req.readyState}`);
+          console.log("xhr setTimeout aborting: "+req.readyState);
           LogCompletion('abort');
           req.onload = undefined;           // clear out all our request handlers
           req.onerror = undefined;
@@ -108,7 +108,7 @@
           req.onprogress = undefined;
           req.onloadend = undefined;
           req.abort();                      // abort the call
-//          console.log(`Post-abort: readyState ${req.readyState}, statusText: ${req.statusText}`);
+//          console.log("Post-abort: readyState " + req.readyState + ", statusText: " + req.statusText);
         }, userTimeout);
         req.send();
       }
