@@ -20,16 +20,20 @@
         Open the Console to monitor its progress, and the events surrounding its operation.
     </p>
     <p>
-        Demo code created in response to <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3">https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3</a></i>
+        <i>Demo code created in response to:
+        <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3">https://bugs.chromium.org/p/chromium/issues/detail?id=716283#c3</a></i>
+    </p>
     <ul>
-        <li>Enter an address that won't answer:
-            <input type=text id="addressStr" value="http://123.45.67.89" /> (good choice: <i>http://123.45.67.89</i>)
+        <li>Check Interval is: <span id="checkInterval"></span> msec</li>
+        <li><label for="addressStr"> Enter an address that won't answer:</label>
+            <input type="text" name="addressStr" id="addressStr" value="http://123.45.67.89" /> (good choice: <i>http://123.45.67.89</i>)
         </li>
         <li>
-            Enter a timeout: <input type=text id="timeoutStr" value="1000" /> <i>msec</i>
+            <label for="timeoutStr"> Enter a timeout: </label>
+            <input type="text" name="timeoutStr" id="timeoutStr" value="1000" /> <i>msec</i>
         </li>
     </ul>
-    </p>
+
     <h3 id="browserid"></h3>
     <h4>Counts of error status & and recent elapsed times</h4>
     <table>
@@ -42,21 +46,21 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.12/ua-parser.min.js"></script>
     <script>
-        const counts = {
+        var counts = {
           load: 0,
           error: 0,
           abort: 0,
           timeout: 0
         };
-        const recentElapsed = {
+        var recentElapsed = {
           load: 0,
           error: 0,
           abort: 0,
           timeout: 0
         };
 
-        const checkInterval = 30 * 1000;
-        const requestTimeout = 6 * 1000;
+        var checkInterval = 20 * 1000;
+        var requestTimeout = 6 * 1000;
         var startTime = new Date();
         var parser = new UAParser();
         var browserInfo = parser.getResult();
@@ -65,11 +69,12 @@
 
       document.getElementById('browserid').innerHTML = browserID;
       CheckAlive();
+      document.getElementById('checkInterval').innerHTML = checkInterval.toString();
       setInterval (CheckAlive, checkInterval);
 
       function LogCompletion(text) {
-        const endTime = new Date();
-        const elapsed = endTime - startTime;
+        var endTime = new Date();
+        var elapsed = endTime - startTime;
         console.log("Elapsed: " + elapsed + " msec; Status was: " + text);
         counts[text] += 1;
         recentElapsed[text] = elapsed;
@@ -81,13 +86,13 @@
 
       function CheckAlive() {
 
-        const host = document.getElementById('addressStr').value;
-        const timeout = document.getElementById('timeoutStr').value;
-        const userTimeout = parseInt(timeout);
+        var host = document.getElementById('addressStr').value;
+        var timeout = document.getElementById('timeoutStr').value;
+        var userTimeout = parseInt(timeout);
 
 //        console.log("Called CheckAlive: "+host + "timeout is "+ userTimeout +" msec");
 
-        const req = new XMLHttpRequest();             // this is the request we'll use to test host_port
+        var req = new XMLHttpRequest();             // this is the request we'll use to test host_port
 
         req.addEventListener("load"   , function() { LogCompletion('load') });    // Got some kind of response back
         req.addEventListener("error"  , function() { LogCompletion('error')  });    // CORS errors show the server is there
@@ -95,11 +100,15 @@
         req.addEventListener("timeout", function() { LogCompletion('timeout')  });    // timed out - presumably couldn't connect
 
         // LogToWindow("Testing " + url);
-        req.open('GET', host, true);                        // async http GET from host
-        req.timeout = userTimeout;                       // long-ish timer
+        req.open('GET', host, true);            // async http GET from host
+        req.timeout = 0;                        // Infinite timer - setTimeout() controls length
         // 'ontimeout' events seem always to be paired with addEventListener 'timeout' events, so comment this out
 //        req.ontimeout = (e) => { console.log("timeout from ontimeout - That's OK!")};
         startTime = new Date();
+        setTimeout(function() {
+          console.log(`xhr setTimeout aborting...`);
+          req.abort();
+        }, userTimeout);
         req.send();
       }
     </script>
