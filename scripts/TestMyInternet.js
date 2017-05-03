@@ -2,10 +2,11 @@
 //
 
 import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
-import { CheckHost, GetLocalIP  } from "./network.js";
+import { CheckHost, GetLocalIP, CheckAlive  } from "./network.js";
 
 const checkInterval = 30 * 1000; // msec
-const spinnerTimeout = 3 * 1000; // msec
+const spinnerTimeout = 6 * 1000;
+const requestTimeout = 6 * 1000;
 
 const headers = document.getElementsByTagName("header");
 headers[0].onclick = () => {
@@ -73,22 +74,29 @@ function UpdateHosts() {
   for (let i = 0; i < hostList.length; i++) {
     const hostName = hostList[i].innerHTML;
     const startTime = new Date();
-    CheckHost(hostName)
-      .always((jqXHROrData, textStatus, jqXHROrErrorThrown) =>    {
-        UpdateDevice(hostList[i], textStatus);
+    CheckAlive(hostName, requestTimeout)
+      .then((status) => {
         const endTime = new Date();
         const elapsed = endTime - startTime;
-        consolelog(`In completion: displayedTextStatus is: ${textStatus}, elapsed: ${elapsed} msec`);
+        UpdateDevice(hostList[i], status, elapsed);
       })
+
+    // CheckHost(hostName)
+    //   .always((jqXHROrData, textStatus, jqXHROrErrorThrown) =>    {
+    //     UpdateDevice(hostList[i], textStatus);
+    //     const endTime = new Date();
+    //     const elapsed = endTime - startTime;
+    //     consolelog(`In completion: displayedTextStatus is: ${textStatus}, elapsed: ${elapsed} msec`);
+    //   })
   }
 }
 
 // UpdateDevice(aHost, status) - update the DOM element, based on the status
-function UpdateDevice(aHost, status) {
+function UpdateDevice(aHost, status, elapsed) {
 
   const hostName = aHost.innerHTML;
   let displayedText = "OK:   ";
-  if (status === 'timeout') {
+  if (status === 'timeout' || status === 'abort') {
     displayedText = "Down: ";
   }
   let curColor = aHost.style.backgroundColor;
@@ -107,7 +115,7 @@ function UpdateDevice(aHost, status) {
     // consolelog(`color: ${color}, curColor: ${curColor}`);
     // beep();
   }
-  consolelog(`${hostName} returned: "${displayedText}", ${status}`);
+  consolelog(`${hostName} returned: "${displayedText}", ${status}, Elapsed: ${elapsed}`);
 }
 
 // Play a short beep

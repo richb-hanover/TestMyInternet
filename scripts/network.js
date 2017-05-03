@@ -1,14 +1,12 @@
 // CheckHost - hostName is the name/IPaddress
 //  Return: ajax function that will complete in caller
 
-const requestTimeout = 1000;
-
-export function CheckHost(hostName) {
+export function CheckHost(hostName, timeout) {
 
   return $.ajax({
     url: `http://${hostName}:80/`,
     crossDomain: false,
-    timeout: requestTimeout,
+    timeout: timeout,
     // cache: false,
     data: {
       name : "http://TestMyInter.net"
@@ -42,46 +40,56 @@ export function GetLocalIP() {
     }
   });
 }
-// Check For Liveness - send a http query to the named host and port
+
+// LogCompletion() - completion routine for CheckAlive xhr request
+// clears the timer and
+// resolves the promise, providing the text response
+function LogCompletion(text, timer, resolve ) {
+  if (timer) {
+    clearTimeout(timer);
+  }
+  // console.log("LogCompletion(): Status was: " + text);
+  resolve(text);
+}
+
+// CheckAlive(host) - send a http query to the named host
 // Detect whether it timed out (non-responsive) or returned some other
 //    response/error (most likely will give CORS error, which also means it's up)
 // See also: https://italonascimento.github.io/applying-a-timeout-to-your-promises/
 
-// Not used in version 0.1.0 in favor of ajax() code
+// Note: Using carefully-crafted XMLHttpRequest function for the request because
+//   browsers handle the timeout condition wildly differently when req.timeout=0:
+//    Chrome & others based on Chromium (Opera, Brave) on OSX time out in ~15 seconds
+//    Firefox seems to be willing to wait forever
+//    MSIE & Edge seem to time out in 7 seconds
+// SO... the strategy is to set a timer for less than the desired time and let it
+//    end the request. But cleanup is a little messy - See LogCompletion() and
+//    the timeout routine for details
+export function CheckAlive(host, timeout) {
 
-function CheckAlive(host_port) {
+  return new Promise((resolve, reject) => {
+    const url = `http://${host}:80/`;
+    const req = new XMLHttpRequest();       // this is the request we'll use to test the host
+    const timer = setTimeout(function () {  // timer that will abort the connection if needed
+      // console.log("xhr setTimeout aborting: "+req.readyState);
+      LogCompletion('abort', timer, resolve);
+      req.onload = undefined;           // clear out all our request handlers
+      req.onerror = undefined;
+      req.onabort = undefined;
+      req.ontimeout = undefined;
+      req.onloadstart = undefined;      // clear out all other request handlers
+      req.onprogress = undefined;
+      req.onloadend = undefined;
+      req.abort();                      // abort the xhr request
+  //          console.log("Post-abort: readyState " + req.readyState + ", statusText: " + req.statusText);
+    }, timeout);
 
-  const req = new XMLHttpRequest();             // this is the request we'll use to test host_port
-
-  // promise to run the timer that checks for a connection
-  const timerPromise = new Promise((resolve, reject) => {
-    let id = setTimeout(() => {
-      clearTimeout(id);
-      req.abort();                              // abort the reqPromise so it doesn't re-surface later
-      reject('Down: timeout ');
-    }, requestTimeout);
-  });
-
-  // promise to attempt to connect - it never times out on its own
-  const reqPromise = new Promise(function (resolve, reject) {
-    const myurl = encodeURI('http://TestMyInter.net/');
-    const url = "http://" + host_port + "/?page="+ myurl;
-
-    req.addEventListener("load"   , () => { resolve('OK:    ') });    // Got some kind of response back
-    req.addEventListener("error"  , () => { resolve('OK:    ') });    // CORS errors show the server is there
-    // req.addEventListener("abort"  , () => { reject ('Abort: ') });    // Somebody aborted test (don't know how)
-    // req.addEventListener("timeout", () => { reject ('Down:  ') });    // timed out - presumably couldn't connect
-
-    // LogToWindow("Testing " + url);
-    req.open('GET', url, true);                         // async http GET from host
-    req.timeout = 0;                                    // Don't let XMLHttpRequest time out on its own
-    // req.ontimeout = (e) => { reject ('Down:  ') };
+    req.open('GET', url, true);             // async http GET from host
+    req.timeout = 0;                        // Infinite timer - setTimeout() controls length
+    req.onload    = function (e) { LogCompletion('load',    timer, resolve)  };
+    req.onerror   = function (e) { LogCompletion('error',   timer, resolve)  };
+    req.onabort   = function (e) { LogCompletion('abort',   timer, resolve)  };
+    req.ontimeout = function (e) { LogCompletion('timeout', timer, resolve)  };
     req.send();
-  });
-
-  // Returns a race between our timeout and request promises
-  return Promise.race([
-    timerPromise,
-    reqPromise
-  ]);
+  })
 }
