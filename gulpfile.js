@@ -15,6 +15,7 @@ var buffer = require('vinyl-buffer');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var historyApiFallback = require('connect-history-api-fallback')
+var injectVersion = require('gulp-inject-version');
 
 
 /*
@@ -41,6 +42,15 @@ gulp.task('styles',function() {
 gulp.task('images',function(){
   gulp.src('css/images/**')
     .pipe(gulp.dest('./build/css/images'))
+});
+
+/*
+  HTML, Markdown, and other text files
+ */
+gulp.task('html', function() {
+  gulp.src('*.+(html|md)')
+    .pipe(injectVersion())
+    .pipe(gulp.dest('./build'));
 });
 
 /*
@@ -111,7 +121,7 @@ gulp.task('bump-version', function() {
 });
 
 // run 'scripts' task first, then watch for future changes
-gulp.task('default', ['images','styles','scripts','browser-sync'], function() {
+gulp.task('default', ['images','styles','scripts','html','browser-sync'], function() {
   gulp.watch('css/*', ['styles']); // gulp watch for stylus changes
   return buildScript('TestMyInternet.js', true); // browserify watch for JS changes
 });
