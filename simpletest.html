@@ -96,10 +96,10 @@
         var req = new XMLHttpRequest();         // this is the request we'll use to test the host
         req.open('GET', host, true);            // async http GET from host
         req.timeout = 0;                        // Infinite timer - setTimeout() controls length
-        req.onload    = function (e) { LogCompletion('load')  };
-        req.onerror   = function (e) { LogCompletion('error')  };
-        req.onabort   = function (e) { LogCompletion('abort')  };
-        req.ontimeout = function (e) { LogCompletion('timeout')  };
+        req.onload    = function (e) { LogCompletion('load');    console.log(e); };
+        req.onerror   = function (e) { LogCompletion('error');   console.log(e); };
+        req.onabort   = function (e) { LogCompletion('abort');   console.log(e); };
+        req.ontimeout = function (e) { LogCompletion('timeout'); console.log(e); };
         startTime = new Date();
         timer = setTimeout(function () {
           console.log("xhr setTimeout aborting: "+req.readyState);

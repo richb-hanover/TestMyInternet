@@ -29,7 +29,7 @@ setInterval (UpdateHosts, checkInterval);    // every 30 sec
 // AddInitialHosts() - make a list of <host> elements on the page to start
 function AddInitialHosts() {
   let initialHosts = [
-    'google.com'
+    'www.google.com'
   ];
   initialHosts.forEach((elem) => AddHost(elem));
 }
