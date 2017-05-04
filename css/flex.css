@@ -27,6 +27,11 @@ body {
     flex_shrink: 1;
 }
 
+#version {
+    font-size: x-small;
+    float: right;
+}
+
 .fitem, #wrapper {
     /*border: 1px dotted grey;*/
     /*border-radius: 7pt;*/

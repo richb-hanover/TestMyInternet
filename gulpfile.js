@@ -59,7 +59,7 @@ gulp.task('html', function() {
 gulp.task('browser-sync', function() {
     browserSync({
         // we need to disable clicks and forms for when we test multiple rooms
-        server : {},
+        server : { baseDir: "./build" },
         middleware : [ historyApiFallback() ],
         ghostMode: false
     });
@@ -122,6 +122,7 @@ gulp.task('bump-version', function() {
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['images','styles','scripts','html','browser-sync'], function() {
-  gulp.watch('css/*', ['styles']); // gulp watch for stylus changes
+  gulp.watch('css/*', ['styles']);            // gulp watch for styles changes
+  gulp.watch('*.+(html|md)', ['html']);       // gulp watch for html/md changes
   return buildScript('TestMyInternet.js', true); // browserify watch for JS changes
 });

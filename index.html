@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="./build/css/flex.css">
+    <link rel="stylesheet" type="text/css" href="./css/flex.css">
     <title>Test My Internet</title>
 </head>
 <body>
 <div id="wrapper">
-    <header class="fitem">Test My Internet <small>%%GULP_INJECT_VERSION%%</small>
+    <header class="fitem">Test My Internet
         <span id="spinner" style="float:right; visibility:hidden;">
             <i class="fa fa-refresh fa-spin fa-fw fa-inverse"></i>
             <span class="sr-only">Refreshing...</span>
@@ -30,13 +30,13 @@
         </div>
         <textarea class="fitem" id="article" style="font-family: 'Courier New'"></textarea>
     </nav>
-        
+    <div id="version">%%GULP_INJECT_VERSION%%</div>
         <!-- <aside class="fitem">aside</aside> -->
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://use.fontawesome.com/123ae2721d.js"></script>
-<script src="./build/TestMyInternet.js"></script>
+<script src="./TestMyInternet.js"></script>
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
