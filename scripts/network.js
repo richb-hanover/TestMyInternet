@@ -65,10 +65,15 @@ function LogCompletion(text, timer, resolve ) {
 // SO... the strategy is to set a timer for less than the desired time and let it
 //    end the request. But cleanup is a little messy - See LogCompletion() and
 //    the timeout routine for details
+// Also need to create a "simple request" that doesn't trigger a pre-flight test.
+// See https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Preflighted_requests
+
+let cache = Math.round(Math.random()*1000000);                 // global
 export function CheckAlive(host, timeout) {
 
   return new Promise((resolve, reject) => {
-    const url = `http://${host}:80/`;
+    const url = `http://${host}:80/?cache=${cache}`;
+    cache += 1;
     const req = new XMLHttpRequest();       // this is the request we'll use to test the host
     const timer = setTimeout(function () {  // timer that will abort the connection if needed
       // console.log("xhr setTimeout aborting: "+req.readyState);
@@ -85,11 +90,13 @@ export function CheckAlive(host, timeout) {
     }, timeout);
 
     req.open('GET', url, true);             // async http GET from host
+    req.setRequestHeader('Content-Type', 'text/plain');
     req.timeout = 0;                        // Infinite timer - setTimeout() controls length
     req.onload    = function (e) { LogCompletion('load',    timer, resolve)  };
     req.onerror   = function (e) { LogCompletion('error',   timer, resolve)  };
     req.onabort   = function (e) { LogCompletion('abort',   timer, resolve)  };
     req.ontimeout = function (e) { LogCompletion('timeout', timer, resolve)  };
+    // console.log(`About to request: ${url}`);
     req.send();
   })
 }

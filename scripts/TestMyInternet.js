@@ -16,7 +16,9 @@ headers[0].onclick = () => {
 };
 
 // We're starting up
-LogToWindow("Starting TestMyInter.net - Leave this window open");
+
+// const versionInfo = require('fs').readFileSync('./version.txt', 'utf8');
+LogToWindow(`Starting TestMyInter.net`);
 
 AddInitialHosts();
 AddRouter();

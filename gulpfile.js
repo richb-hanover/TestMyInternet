@@ -102,6 +102,14 @@ gulp.task('scripts', function() {
   return buildScript('TestMyInternet.js', false); // this will run once because we set watch to false
 });
 
+gulp.task('bump-version', function() {
+  const pkg = require('./package.json');
+  const fs = require('fs');
+  const now = new Date();
+  const versioninfo = `${pkg.name} ${pkg.version}`;
+  fs.writeFileSync('./version.txt', versioninfo);
+});
+
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['images','styles','scripts','browser-sync'], function() {
   gulp.watch('css/*', ['styles']); // gulp watch for stylus changes
