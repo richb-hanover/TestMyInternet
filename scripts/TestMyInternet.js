@@ -21,7 +21,8 @@ const versionInfo = document.getElementById('version').innerHTML;
 LogToWindow(`Starting TestMyInter.net ${versionInfo}`);
 
 AddInitialHosts();
-AddRouter();
+// AddRouter();
+UpdateHosts();
 
 // queue up a test of all hosts every now and again
 setInterval (UpdateHosts, checkInterval);    // every 30 sec
@@ -29,7 +30,7 @@ setInterval (UpdateHosts, checkInterval);    // every 30 sec
 // AddInitialHosts() - make a list of <host> elements on the page to start
 function AddInitialHosts() {
   let initialHosts = [
-    'www.google.com'
+    'google.com'
   ];
   initialHosts.forEach((elem) => AddHost(elem));
 }
