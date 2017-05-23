@@ -1,18 +1,18 @@
 // CheckHost - hostName is the name/IPaddress
 //  Return: ajax function that will complete in caller
 
-export function CheckHost(hostName, timeout) {
+// export function CheckHost(hostName, timeout) {
 
-  return $.ajax({
-    url: `http://${hostName}:80/`,
-    crossDomain: false,
-    timeout: timeout,
-    // cache: false,
-    data: {
-      name : "http://TestMyInter.net"
-    }
-  })
-}
+//   return $.ajax({
+//     url: `http://${hostName}:80/`,
+//     crossDomain: false,
+//     timeout: timeout,
+//     // cache: false,
+//     data: {
+//       name : "http://TestMyInter.net"
+//     }
+//   })
+// }
 
 // GetLocalIP() - return the machine's local IP address
 // uses webRTC for the answer

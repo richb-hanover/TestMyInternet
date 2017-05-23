@@ -7,12 +7,21 @@ import { CheckHost, GetLocalIP, CheckAlive  } from "./network.js";
 const checkInterval = 30 * 1000; // msec
 const spinnerTimeout = 6 * 1000;
 const requestTimeout = 6 * 1000;
+let averageResponse = 0;
 
 const headers = document.getElementsByTagName("header");
 headers[0].onclick = () => {
-  LogToWindow("Manual check...");
-  consolelog("Manual check...");
-  UpdateHosts();
+  const spinner = document.getElementById("spinner");
+  if (spinner.style.visibility === "visible") {
+    LogToWindow("Already testing...");
+    consolelog("Already testing...");
+  }
+  else {
+    LogToWindow("Manual check...");
+    consolelog("Manual check...");
+    UpdateHosts();  
+  }
+  
 };
 
 // We're starting up
@@ -65,11 +74,7 @@ function AddRouter() {
 // find all the <host> elements on the page, iterate through them
 function UpdateHosts() {
 
-  const spinner = document.getElementById("spinner");
-  if (spinner.style.visibility === "visible") {
-    consolelog("Already testing...");
-    return;
-  }
+  // Start the spinner, with a timeout
   spinner.style.visibility = "visible";
   setTimeout(() => { spinner.style.visibility = "hidden"; }, spinnerTimeout);
 
@@ -94,14 +99,30 @@ function UpdateHosts() {
   }
 }
 
+// UpdateAverage(elapsed)
+function UpdateAverage(elapsed) {
+  averageResponse = averageResponse*0.875 + elapsed*0.125;
+}
+
 // UpdateDevice(aHost, status) - update the DOM element, based on the status
 function UpdateDevice(aHost, status, elapsed) {
 
   const hostName = aHost.innerHTML;
-  let displayedText = "OK:   ";
-  if (status === 'timeout' || status === 'abort') {
-    displayedText = "Down: ";
+  
+  if (averageResponse == 0) {           // initial setting...
+        averageResponse = elapsed;
   }
+
+  let displayedText = "Down: ";
+  if (status === 'load') {
+    displayedText   = "OK:   ";
+    UpdateAverage(elapsed);
+  }
+  else if (status === 'error' && elapsed < 4*averageResponse) {
+    displayedText   = "OK:   ";  
+    UpdateAverage(elapsed);
+  }
+
   let curColor = aHost.style.backgroundColor;
   if (curColor) {
     curColor = rgb2hex(curColor).toUpperCase();
@@ -118,7 +139,7 @@ function UpdateDevice(aHost, status, elapsed) {
     // consolelog(`color: ${color}, curColor: ${curColor}`);
     // beep();
   }
-  consolelog(`${hostName} returned: "${displayedText}", ${status}, Elapsed: ${elapsed}`);
+  consolelog(`${hostName} returned: "${displayedText}", ${status}, Elapsed: ${elapsed}, Average: ${averageResponse}`);
 }
 
 // Play a short beep
