@@ -22,24 +22,24 @@
 //   .then(ip => document.write('your ip: ', ip))
 //   .catch(e => console.error(e))
 
-export function GetLocalIP() {
-    return new Promise(r => {
-    const w = window,
-          a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({
-            iceServers: []
-          }),
-          b = () => {
-          };
-    a.createDataChannel("");
-    a.createOffer(c => a.setLocalDescription(c, b, b), b);
-    a.onicecandidate = c => {
-      try {
-        c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r)
-      } catch (e) {
-      }
-    }
-  });
-}
+// export function GetLocalIP() {
+//     return new Promise(r => {
+//     const w = window,
+//           a = new (w.RTCPeerConnection || w.mozRTCPeerConnection || w.webkitRTCPeerConnection)({
+//             iceServers: []
+//           }),
+//           b = () => {
+//           };
+//     a.createDataChannel("");
+//     a.createOffer(c => a.setLocalDescription(c, b, b), b);
+//     a.onicecandidate = c => {
+//       try {
+//         c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r)
+//       } catch (e) {
+//       }
+//     }
+//   });
+// }
 
 // LogCompletion() - completion routine for CheckAlive xhr request
 // clears the timer and

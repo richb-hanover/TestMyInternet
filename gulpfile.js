@@ -52,7 +52,7 @@ gulp.task('images',function(){
   HTML, Markdown, and other text files
  */
 gulp.task('html', function() {
-  gulp.src('*.+(html|md)')
+  gulp.src('html/*.+(html|md)')
     .pipe(injectVersion())
     .pipe(gulp.dest('./build'));
 });
@@ -162,6 +162,6 @@ gulp.task('bump-version', function() {
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['images','styles','scripts','html','browser-sync'], function() {
   gulp.watch('css/*', ['styles']);            // gulp watch for styles changes
-  gulp.watch('*.+(html|md)', ['html']);       // gulp watch for html/md changes
+  gulp.watch('html/*.+(html|md)', ['html']);       // gulp watch for html/md changes
   return buildScript('TestMyInternet.js', true); // browserify watch for JS changes
 });

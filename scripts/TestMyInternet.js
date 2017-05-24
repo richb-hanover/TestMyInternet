@@ -13,15 +13,12 @@ const headers = document.getElementsByTagName("header");
 headers[0].onclick = () => {
   const spinner = document.getElementById("spinner");
   if (spinner.style.visibility === "visible") {
-    LogToWindow("Already testing...");
     consolelog("Already testing...");
   }
   else {
-    LogToWindow("Manual check...");
     consolelog("Manual check...");
     UpdateHosts();  
   }
-  
 };
 
 // We're starting up
@@ -88,18 +85,11 @@ function UpdateHosts() {
         const elapsed = endTime - startTime;
         UpdateDevice(hostList[i], status, elapsed);
       })
-
-    // CheckHost(hostName)
-    //   .always((jqXHROrData, textStatus, jqXHROrErrorThrown) =>    {
-    //     UpdateDevice(hostList[i], textStatus);
-    //     const endTime = new Date();
-    //     const elapsed = endTime - startTime;
-    //     consolelog(`In completion: displayedTextStatus is: ${textStatus}, elapsed: ${elapsed} msec`);
-    //   })
   }
 }
 
 // UpdateAverage(elapsed)
+// Weighted average of averageResponse time: 7/8 of current average + 1/8 of new reading
 function UpdateAverage(elapsed) {
   averageResponse = averageResponse*0.875 + elapsed*0.125;
 }
