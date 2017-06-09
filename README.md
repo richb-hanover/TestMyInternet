@@ -11,8 +11,25 @@ and logs when it can or can't connect.
 4. The information on the right show the history of Up/Down events
 5. If you close the web page, all the history will be lost 
 
-## To-Do's
+## Building and testing
 
-- Add and remove sites to be tested
-- Retain current devices and their history when the window closes
-- Identify the proper test interval (30 seconds for the time being)
+- `npm run gulp` on local server runs the gulp process, 
+starts a development web server, 
+and starts BrowserSync to force the browser to open. 
+It also starts a watch process to refresh browser when things change.
+- Edit README.md and ToDo.md to retain hints about the project. 
+These will not be served in final project.
+
+## Deployment
+
+- On the main/production web server, retrieve software from github repo
+    ```
+    cd /var/www/TestMyInternet
+    git pull
+    npm run gulp
+    ^C   # to abort. No need for further gulp action
+    ```
+- Domain is served out of /var/www/TestMyInternet/build directory
+- On local machine, `gulp patch`, `gulp feature`, and `gulp release` update
+the version in the package.json and also (when re-running `npm run gulp`) in index.html,
+then re-pull from github.

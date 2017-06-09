@@ -139,7 +139,7 @@ function inc(importance) {
     // save it back to filesystem
     .pipe(gulp.dest('./'))
     // commit the changed version number
-    .pipe(git.commit('bumps package version'))
+    .pipe(git.commit('bump package version'))
 
     // read only one file to get the version number
     .pipe(filter('package.json'))
@@ -161,7 +161,7 @@ gulp.task('bump-version', function() {
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['images','styles','scripts','html','browser-sync'], function() {
-  gulp.watch('css/*', ['styles']);            // gulp watch for styles changes
-  gulp.watch('html/*.+(html|md)', ['html']);       // gulp watch for html/md changes
-  return buildScript('TestMyInternet.js', true); // browserify watch for JS changes
+  gulp.watch('css/*', ['styles']);                  // gulp watch for styles changes
+  gulp.watch('html/*.+(html|md)', ['html']);        // gulp watch for html/md changes
+  return buildScript('TestMyInternet.js', true);    // browserify watch for JS changes
 });
