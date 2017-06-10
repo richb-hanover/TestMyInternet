@@ -26,7 +26,7 @@ export function RestoreLogArea() {
     LogToWindow(`Starting TestMyInter.net ${versionInfo}`);
   }
   else {
-    LogToWindow(`----: Resumed monitoring with ${versionInfo}`);
+    LogToWindow(`----: Testing resumed with ${versionInfo}`);
   }
 }
 
@@ -35,7 +35,7 @@ export function SaveLogArea() {
   var str = "";
 
   if (document.getElementById("LogArea").value !== "") {
-    LogToWindow('----: Paused monitoring');
+    LogToWindow('----: Testing paused...');
   }
   if (typeof(Storage) !== "undefined") {
     str = document.getElementById("LogArea").value;
