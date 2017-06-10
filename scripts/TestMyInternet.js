@@ -53,7 +53,7 @@ function AddHost(hostStr) {
   const hosts = document.getElementById('hosts');
   const host = document.createElement('host');
   host.innerHTML = hostStr;
-  host.classList.add("fitem");
+  host.classList.add("jumbotron");
   hosts.appendChild(host);
 }
 
