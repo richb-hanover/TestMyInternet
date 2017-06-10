@@ -1,5 +1,6 @@
 
 // LogToWindow() - log data to the main GUI window with time stamp, appending to existing text
+//  This routine always appends "\n" to the end of the string so new entries start their own line
 export function LogToWindow(text) {
   const textarea = document.getElementById("LogArea");
   const curtext = textarea.value;
@@ -11,6 +12,8 @@ export function LogToWindow(text) {
 // RestoreLogArea() - read the contents of localStorage, and place into LogArea <textarea>
 export function RestoreLogArea() {
   var str = "";
+  const versionInfo = document.getElementById('version').innerHTML;
+
   if (typeof(Storage) !== "undefined") {
     str = localStorage.getItem("LogArea");
     if (! str) {    // not a truthy value
@@ -19,12 +22,11 @@ export function RestoreLogArea() {
     consolelog(`localStorage held "${str}"`);
   }
   document.getElementById("LogArea").value = str;
-  if (str !== "") {
-    LogToWindow('----: Resumed monitoring');
+  if (str === "") {
+    LogToWindow(`Starting TestMyInter.net ${versionInfo}`);
   }
   else {
-    const versionInfo = document.getElementById('version').innerHTML;
-    LogToWindow(`Starting TestMyInter.net ${versionInfo}`);
+    LogToWindow(`----: Resumed monitoring with ${versionInfo}`);
   }
 }
 
