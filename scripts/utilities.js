@@ -13,20 +13,18 @@ export function RestoreLogArea() {
   var str = "";
   if (typeof(Storage) !== "undefined") {
     str = localStorage.getItem("LogArea");
-    if (str.length === 0) {
+    if (! str) {    // not a truthy value
       str = "";
     }
-    consolelog("localStorage held '" + str + '"');
+    consolelog(`localStorage held "${str}"`);
   }
   document.getElementById("LogArea").value = str;
   if (str !== "") {
     LogToWindow('----: Resumed monitoring');
-    consolelog('Reopened Window"'+str+'"\n');
   }
   else {
     const versionInfo = document.getElementById('version').innerHTML;
     LogToWindow(`Starting TestMyInter.net ${versionInfo}`);
-    consolelog('Starting TestMyInternet...');
   }
 }
 
@@ -40,7 +38,7 @@ export function SaveLogArea() {
   if (typeof(Storage) !== "undefined") {
     str = document.getElementById("LogArea").value;
     localStorage.setItem("LogArea", str);
-    consolelog('Saving LogArea "' + str + '"');
+    consolelog(`Saving LogArea "${str}"`);
   }
 }
 
