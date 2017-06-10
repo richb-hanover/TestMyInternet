@@ -1,7 +1,7 @@
 // First cut at monitoring websites from a web page application
 //
 
-import { LogToWindow, consolelog, rgb2hex } from "./utilities.js";
+import { LogToWindow, RestoreLogArea, SaveLogArea, ClearLocalStorage, consolelog, rgb2hex } from "./utilities.js";
 import { CheckHost, GetLocalIP, CheckAlive  } from "./network.js";
 
 const checkInterval = 30 * 1000; // msec
@@ -9,8 +9,10 @@ const spinnerTimeout = 6 * 1000;
 const requestTimeout = 6 * 1000;
 let averageResponse = 0;
 
-const headers = document.getElementsByTagName("header");
-headers[0].onclick = () => {
+// We're starting up - set up handlers
+
+const header = document.getElementsByTagName("header")[0];
+header.onclick = () => {
   const spinner = document.getElementById("spinner");
   if (spinner.style.visibility === "visible") {
     consolelog("Already testing...");
@@ -21,14 +23,19 @@ headers[0].onclick = () => {
   }
 };
 
-// We're starting up
+// get the version, and also set up its onclick handler
+const version = document.getElementById('version');
+version.onclick = () => {     // clear out localStorage if clicked (debugging)
+  ClearLocalStorage();
+}
 
-const versionInfo = document.getElementById('version').innerHTML;
-LogToWindow(`Starting TestMyInter.net ${versionInfo}`);
+// window.addEventListener("load", RestoreLogArea );  // not necessary: called below
+window.addEventListener("pagehide", SaveLogArea );
 
-AddInitialHosts();
+RestoreLogArea();           // restore the LogArea text area from localStorage
+AddInitialHosts();          // add in the list of hosts (actually, only one now)
 // AddRouter();
-UpdateHosts();
+UpdateHosts();              // test the hosts
 
 // queue up a test of all hosts every now and again
 setInterval (UpdateHosts, checkInterval);    // every 30 sec
