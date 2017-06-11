@@ -1,11 +1,12 @@
 
 // LogToWindow() - log data to the main GUI window with time stamp, appending to existing text
+// If the (optional) date timestamp is supplied, it overrides the current time.
 //  This routine always appends "\n" to the end of the string so new entries start their own line
-export function LogToWindow(text) {
+export function LogToWindow(text, date = new Date()) {
   const textarea = document.getElementById("LogArea");
   const curtext = textarea.value;
-  const date = new Date().toLocaleString();
-  textarea.value = (curtext + date + " " + text + "\n");
+  const dateStr = date.toLocaleString();
+  textarea.value = (curtext + dateStr + " " + text + "\n");
   textarea.scrollTop = textarea.scrollHeight;
 }
 
