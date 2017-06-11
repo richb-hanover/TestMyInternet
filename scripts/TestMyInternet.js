@@ -80,10 +80,11 @@ function AddRouter() {
 function UpdateHosts() {
 
   // Start the spinner, with a timeout
-  spinner.style.visibility = "visible";
+  spinner.style.display = "block";
   // setTimeout(() => { spinner.style.visibility = "hidden"; }, spinnerTimeout);
 
-  // Detect if the computer has gone to sleep (and not tested recently)
+  // Detect if the computer has gone to sleep (and consequently hasn't run a test recently)
+  // We log this because we can't know if there has been a failure while we were asleep
   CheckForSleep();
 
   const hostList = document.getElementsByTagName("host");
@@ -97,7 +98,7 @@ function UpdateHosts() {
         UpdateDevice(hostList[i], status, elapsed);
       })
       .then(() => {
-        spinner.style.visibility = "hidden";
+        $("#spinner").fadeOut(1000);
       })
   }
 }
@@ -153,7 +154,7 @@ function beep()
   snd.play();
 }
 
-// CheckForSleep() - check if the time of the last test is >> checkInterval
+// CheckForSleep() - check if delta from the time of the last test is >> checkInterval
 // also updates lastTestTick
 function CheckForSleep() {
   const curTime = new Date();

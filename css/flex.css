@@ -45,6 +45,11 @@ body {
     flex_shrink: 1;
 }
 
+#spinner {
+    float:right; 
+    display: none
+}
+
 footer {
     font-size: x-small;
 }
@@ -60,16 +65,6 @@ footer {
     font-family:    Courier, fixed;
     height:         150px;
 }
-
-@keyframes fadeOut {
-    0% {opacity: 1;}
-    100% {opacity: 0;}
- }
- 
- .fadeOut {
-    animation-name: fadeOut;
-    animation-duration: 3s;
- }
 
 .fitem, #wrapper {
     /*border: 1px dotted grey;*/
