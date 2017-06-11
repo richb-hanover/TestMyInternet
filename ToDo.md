@@ -6,18 +6,23 @@ Ultimately, it will show a history with time-stamped up/down events.
 
 ## Tasks
 
-- Restore textarea/history on reload
 - Use Markdown to display textarea (?)
-- Rework GUI to get rid of flexbox
 - Minimize and open new window button
-- Make About... page driven by newer Markdown page
+- Add hamburger icon in nav bar
 - Consider getting location info; displaying neighborhood up/downs
+- Move spinner to green icon?
+- Make header stretch across page?
 
 ## Completed tasks
 
 * LogToWindow when item changes state
 - Segregate all publishable html/md files into html/ directory
 - Make remote-site checking code more robust
+- Restore textarea/history on reload
+- Rework GUI to get rid of flexbox (Switched to bootstrap3)
+- Possibly add About at bottom of page
+- Make About... page driven by newer Markdown page,
+- Change text to white <h1> in green icon?
 
 ## Won't Fix
 

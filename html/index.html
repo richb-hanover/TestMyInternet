@@ -21,6 +21,12 @@
     <link href="css/jumbotron-narrow.css" rel="stylesheet">
     <link href="css/flex.css" rel="stylesheet">
 
+    <!-- Code to make zero-md markdown stunt work... -->
+    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v0.7.15/webcomponents-lite.min.js"></script>
+    <link rel="import" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/build/zero-md.html">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/markdown-themes/default.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/highlight-themes/default.css">
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--
       <! - -[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]- - >
@@ -40,7 +46,7 @@
     <div class="container">
       
       <header class="fitem">Test My Internet
-        <span id="spinner" style="float:right; visibility:hidden;">
+        <span id="spinner" class="fadeout" style="float:right; visibility:hidden;">
             <i>Testing... </i><i class="fa fa-refresh fa-spin fa-fw fa-inverse"></i>
             <span class="sr-only">Refreshing...</span>
         </span>
@@ -48,7 +54,12 @@
 
       <div id="hosts"></div>
 
-      <textarea id="LogArea" ></textarea>
+      <textarea id="LogArea"></textarea>
+
+      <!-- Edit your Markdown URL file location here -->
+      <zero-md file="/README.md">
+        <div class="md-html"></div>
+      </zero-md>
 
       <footer >
         <div>

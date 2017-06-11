@@ -20,7 +20,7 @@ export function RestoreLogArea() {
     if (! str) {    // not a truthy value
       str = "";
     }
-    consolelog(`localStorage held "${str}"`);
+    // consolelog(`localStorage held: \n${str}`);
   }
   document.getElementById("LogArea").value = str;
   if (str === "") {
@@ -41,7 +41,7 @@ export function SaveLogArea() {
   if (typeof(Storage) !== "undefined") {
     str = document.getElementById("LogArea").value;
     localStorage.setItem("LogArea", str);
-    consolelog(`Saving LogArea "${str}"`);
+    // consolelog(`Saving LogArea: \n${str}`);
   }
 }
 

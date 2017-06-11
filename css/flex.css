@@ -58,8 +58,18 @@ footer {
     font-size:      12px;
     width:          100%;
     font-family:    Courier, fixed;
-    height:         200px;
+    height:         150px;
 }
+
+@keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+ }
+ 
+ .fadeOut {
+    animation-name: fadeOut;
+    animation-duration: 3s;
+ }
 
 .fitem, #wrapper {
     /*border: 1px dotted grey;*/

@@ -158,7 +158,7 @@ function beep()
 function CheckForSleep() {
   const curTime = new Date();
   const delta = curTime - lastTestTick;
-  consolelog(`LastTestTick: ${lastTestTick}; Current: ${curTime}; Delta: ${delta}`);
+  // consolelog(`LastTestTick: ${lastTestTick}; Current: ${curTime}; Delta: ${delta}`);
   if (delta > 2*checkInterval + 1) {
     LogToWindow('----: Testing paused (sleep)', lastTestTick);
     LogToWindow('----: Testing resumed (awake)');
