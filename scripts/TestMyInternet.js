@@ -93,8 +93,8 @@ function UpdateHosts() {
     const startTime = new Date();
     CheckAlive(hostName, requestTimeout)
       .then((status) => {
-        const endTime = new Date();
-        const elapsed = endTime - startTime;
+        lastTestTick = new Date();                  // remember this test time
+        const elapsed = lastTestTick - startTime;
         UpdateDevice(hostList[i], status, elapsed);
       })
       .then(() => {
@@ -155,7 +155,6 @@ function beep()
 }
 
 // CheckForSleep() - check if delta from the time of the last test is >> checkInterval
-// also updates lastTestTick
 function CheckForSleep() {
   const curTime = new Date();
   const delta = curTime - lastTestTick;
@@ -164,6 +163,5 @@ function CheckForSleep() {
     LogToWindow('----: Testing paused (sleep)', lastTestTick);
     LogToWindow('----: Testing resumed (awake)');
   }
-  lastTestTick = curTime;
 }
 
