@@ -1,4 +1,4 @@
-#Test My Internet
+# Test My Internet
 
 A Single Page (web) Application (SPA) that queries a set of web servers to see if they're alive. 
 It runs as long as the page is open, and saves the state in localStorage.
@@ -7,11 +7,15 @@ Ultimately, it will show a history with time-stamped up/down events.
 ## Tasks
 
 - Use Markdown to display textarea (?)
-- Minimize and open new window button
-- Add hamburger icon in nav bar
+- Or come up with better summary of up/down events
+- Add link to minimize and open new window button
 - Consider getting location info; displaying neighborhood up/downs
 - Move spinner to green icon?
+- Change text to white \<h1> in green icon?
+- Add "Up/Down since..." in green icon
+- Remove \<header> altogether?
 - Make header stretch across page?
+- Add hamburger icon in nav bar
 
 ## Completed tasks
 
@@ -22,7 +26,6 @@ Ultimately, it will show a history with time-stamped up/down events.
 - Rework GUI to get rid of flexbox (Switched to bootstrap3)
 - Possibly add About at bottom of page
 - Make About... page driven by newer Markdown page,
-- Change text to white <h1> in green icon?
 
 ## Won't Fix
 

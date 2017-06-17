@@ -30,10 +30,10 @@ version.onclick = () => {     // clear out localStorage if clicked (debugging)
   ClearLocalStorage();
 }
 
-// window.addEventListener("load", RestoreLogArea );  // not necessary: called below
-window.addEventListener("pagehide", SaveLogArea );
+// call SaveLogArea() whenever window/tab is about to close, or browser about to exit
+window.addEventListener("beforeunload", SaveLogArea); 
 
-RestoreLogArea();           // restore the LogArea text area from localStorage
+RestoreLogArea();           // we're starting this page again: restore the LogArea
 AddInitialHosts();          // add in the list of hosts (actually, only one now)
 // AddRouter();
 UpdateHosts();              // test the hosts
@@ -59,21 +59,21 @@ function AddHost(hostStr) {
 }
 
 // AddRouter() - request the local IP address, divine the router's address (".1"), and add it
-function AddRouter() {
-  GetLocalIP()
-    .then ((ip) => {
-      let segments = ip.split(".");
-      segments[3] = "1";
-      const routerIP = segments.join(".");
-      AddHost(routerIP);
-    })
-    .then (() => {
-      UpdateHosts();         // kick off the test run
-    })
-    .catch ((e) => {
-      consolelog(`GetLocalIP returned error: ${e}`);
-  })
-}
+// function AddRouter() {
+//   GetLocalIP()
+//     .then ((ip) => {
+//       let segments = ip.split(".");
+//       segments[3] = "1";
+//       const routerIP = segments.join(".");
+//       AddHost(routerIP);
+//     })
+//     .then (() => {
+//       UpdateHosts();         // kick off the test run
+//     })
+//     .catch ((e) => {
+//       consolelog(`GetLocalIP returned error: ${e}`);
+//   })
+// }
 
 // UpdateHosts() - test all the hosts, and update their status
 // find all the <host> elements on the page, iterate through them
