@@ -91,11 +91,12 @@ function UpdateHosts() {
   for (let i = 0; i < hostList.length; i++) {
     const hostName = hostList[i].innerHTML;
     const startTime = new Date();
+    const delta = startTime - lastTestTick;         // delta since previous test
     CheckAlive(hostName, requestTimeout)
       .then((status) => {
-        lastTestTick = new Date();                  // remember this test time
+        lastTestTick = new Date();                  // remember this test's time
         const elapsed = lastTestTick - startTime;
-        UpdateDevice(hostList[i], status, elapsed);
+        UpdateDevice(hostList[i], status, delta, elapsed);
       })
       .then(() => {
         $("#spinner").fadeOut(1000);
@@ -106,11 +107,11 @@ function UpdateHosts() {
 // UpdateAverage(elapsed)
 // Weighted average of averageResponse time: 7/8 of current average + 1/8 of new reading
 function UpdateAverage(elapsed) {
-  averageResponse = averageResponse*0.875 + elapsed*0.125;
+  averageResponse = Math.round(averageResponse*0.875 + elapsed*0.125);
 }
 
 // UpdateDevice(aHost, status) - update the DOM element, based on the status
-function UpdateDevice(aHost, status, elapsed) {
+function UpdateDevice(aHost, status, delta, elapsed) {
 
   const hostName = aHost.innerHTML;
   
@@ -144,7 +145,7 @@ function UpdateDevice(aHost, status, elapsed) {
     // consolelog(`color: ${color}, curColor: ${curColor}`);
     // beep();
   }
-  consolelog(`${hostName} returned: "${displayedText}", ${status}, Elapsed: ${elapsed}, Average: ${averageResponse}`);
+  consolelog(`${hostName}: "${displayedText}", ${status}, Elapsed: ${elapsed}, Average: ${averageResponse}, Delta: ${delta/1000}`);
 }
 
 // Play a short beep
