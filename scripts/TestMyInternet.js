@@ -156,11 +156,14 @@ function beep()
 }
 
 // CheckForSleep() - check if delta from the time of the last test is >> checkInterval
+// heuristic: if last test was > 4*checkInterval, declare a sleep/resume event
+//    Using Safari on OSX, delta's of 50 .. 69 seconds were observed occasionally
+//    Setting it to 4x the check interval ignores outages of < 2 min, which seems reasonable
 function CheckForSleep() {
   const curTime = new Date();
   const delta = curTime - lastTestTick;
   // consolelog(`LastTestTick: ${lastTestTick}; Current: ${curTime}; Delta: ${delta}`);
-  if (delta > 2*checkInterval + 1) {
+  if (delta > 4*checkInterval + 1) {
     LogToWindow('----: Testing paused (sleep)', lastTestTick);
     LogToWindow('----: Testing resumed (awake)');
   }
