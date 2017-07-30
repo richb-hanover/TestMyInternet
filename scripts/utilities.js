@@ -1,11 +1,14 @@
 
+// include the moment.js date processing package
+var moment = require('moment');
+
 // LogToWindow() - log data to the main GUI window with time stamp, appending to existing text
 // If the (optional) date timestamp is supplied, it overrides the current time.
 //  This routine always appends "\n" to the end of the string so new entries start their own line
 export function LogToWindow(text, date = new Date()) {
   const textarea = document.getElementById("LogArea");
   const curtext = textarea.value;
-  const dateStr = date.toLocaleString();
+  const dateStr = moment().format('MM/DD/YYYY, hh:mm:ss A'); 
   textarea.value = (curtext + dateStr + " " + text + "\n");
   textarea.scrollTop = textarea.scrollHeight;
 }
