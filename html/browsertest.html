@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <link rel="stylesheet" type="text/css" href="./build/css/flex.css"> -->
+    <title>Open New Browser Window</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        td, th {
+            text-align: right;
+            padding: 4px;
+        }
+    </style></head>
+<body>
+    <h1>Open a new "home" page in the browser from Javascript</h1>
+
+    <p>
+        This code opens a new browser window on the user's "home page." 
+        See https://stackoverflow.com/questions/1369450/sending-user-to-their-browsers-home-page-using-javascript for details.
+        Specifically: https://stackoverflow.com/a/38946222/1827982
+        </p>
+        <p>
+        One of these may work:
+        <ul>
+        <li><a href="https://www.google.com/_/chrome/newtab" target="_blank">gc</a></li>
+        <li><a href="about:speeddial" target="_blank">op</a> </li>
+        <li><a href="http://livepage.apple.com" target="_blank">sa</a></li>
+        <li><a href="about:home" target="_blank">Other</a></li>
+        </ul>
+    </p>
+    
+    <div id="browserinfo"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.12/ua-parser.min.js"></script>
+    <script>
+      var ua = navigator.userAgent;
+      var info = {
+              browser: /Edge\/\d+/.test(ua) ? 'ed' 
+                : /MSIE 9/.test(ua) ? 'ie9' 
+                : /MSIE 10/.test(ua) ? 'ie10' 
+                : /MSIE 11/.test(ua) ? 'ie11' 
+                : /MSIE\s\d/.test(ua) ? 'ie?' 
+                : /rv\:11/.test(ua) ? 'ie11' 
+                : /\bOpera\W\d/.test(ua) ? 'op' 
+                : /\bOPR\W\d/i.test(ua) ? 'op' 
+                : /Firefox\W\d/.test(ua) ? 'ff' 
+                : /Chrom(e|ium)\W\d|CriOS\W\d/.test(ua) ? 'gc' 
+                : /\bSafari\W\d/.test(ua) ? 'sa' 
+                : typeof MSPointerEvent !== 'undefined' ? 'ie?' 
+                : '',
+              os: /Windows NT 10/.test(ua) ? "win10" 
+                : /Windows NT 6\.0/.test(ua) ? "winvista" 
+                : /Windows NT 6\.1/.test(ua) ? "win7" 
+                : /Windows NT 6\.\d/.test(ua) ? "win8" 
+                : /Windows NT 5\.1/.test(ua) ? "winxp" 
+                : /Windows NT [1-5]\./.test(ua) ? "winnt" 
+                : /Mac/.test(ua) ? "mac" 
+                : /Linux/.test(ua) ? "linux" 
+                : /X11/.test(ua) ? "nix" 
+                : "",
+              touch: 'ontouchstart' in document.documentElement,
+              mobile: /IEMobile|Windows Phone|Lumia/i.test(ua) ? 'w' 
+                : /iPhone|iP[oa]d/.test(ua) ? 'i' 
+                : /Android/.test(ua) ? 'a' 
+                : /BlackBerry|PlayBook|BB10/.test(ua) ? 'b' 
+                : /Mobile Safari/.test(ua) ? 's' 
+                : /webOS|Mobile|Tablet|Opera Mini|\bCrMo\/|Opera Mobi/i.test(ua) ? 1 
+                : 0,
+              tablet: /Tablet|iPad/i.test(ua),
+      };    
+      var homepageurl = info.browser == 'gc' ? 'https://www.google.com/_/chrome/newtab' 
+        : info.browser == 'op' ? 'about:speeddial' 
+        : info.browser=='sa' ? 'http://livepage.apple.com' 
+        : 'about:home';
+      var browserinfo = 'UserAgent: ' + ua + "<br /> " +
+                        'Browser: ' + info.browser + "<br /> " +
+                        'OS: ' + info.os + "<br /> " +
+                        'Touch: ' + info.touch + "<br /> " +
+                        'Mobile: ' + info.mobile +"<br /> " +
+                        'Tablet: ' + info.tablet +"<br /> " +
+                        'URL: ' + homepageurl;
+      document.getElementById('browserinfo').innerHTML = browserinfo;
+    </script>
+</body>
+</html>

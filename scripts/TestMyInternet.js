@@ -102,6 +102,7 @@ function UpdateHosts() {
   if ( delta > 4*checkInterval ) {
     LogToWindow('----: Testing paused (sleep)', lastTestTick);
     LogToWindow('----: Testing resumed (awake)');      
+    consolelog(`Skipping test from wakeup... Last test: ${lastTestTick} Delta: ${delta/1000}`);
     lastTestTick = startTime;                 
   }
   else {                        // test the (single) host

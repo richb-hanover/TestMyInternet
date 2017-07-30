@@ -1,4 +1,3 @@
------
 ## About _Test My Internet_
 
 This *Test My Internet* page keeps an eye on your internet connection.
@@ -6,10 +5,10 @@ This *Test My Internet* page keeps an eye on your internet connection.
 Every 30 seconds, it tests the connection back to the _TestMyInter.net_ server,
 and displays success/failure results.
 
-Leave the page open while you work on other things (perhaps in another window).
-The tests run in the background. 
-If you do close the main page, the history of the tests (successes and failures) gets saved, 
-so you can re-open the page and still see that history.
+Leave this page open while you work on other things (you might open another window.)
+The tests continue to run in the background. 
+If you do close this page, the history of the tests (successes and failures) gets saved; 
+when you come back, the page reloads the history.
 
 Requests for testers:
 
