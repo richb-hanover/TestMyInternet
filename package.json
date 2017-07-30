@@ -1,6 +1,6 @@
 {
   "name": "TestMyInternet",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "Monitor a set of hosts/addresses from a SPA",
   "main": "TestMyInternet.js",
   "scripts": {
