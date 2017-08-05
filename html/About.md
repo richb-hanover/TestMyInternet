@@ -1,10 +1,12 @@
-## The _Test My Internet_ Story...
+### The _Test My Internet_ Story...
 
 People always gripe to me that their Internet is terrible - it goes up and down "all the time".
-But when I ask how often, they say, "I'm not sure... yesterday for sure, and maybe last Tuesday..." 
-Even if their ISP wanted to be helpful, I know that those vague complaints aren't useful.
+But when I ask how often, they say, "I'm not sure... yesterday morning, 
+and maybe it was last Tuesday..." 
+Even if their ISP wanted to be helpful, I know that vague information won't be helpful
+for resolving the problem.
 
-To arm my neighbors with actual information about outages, I created this site.
+I created this site to arm my neighbors with actual information about outages.
 
 This *Test My Internet* page keeps an eye on your internet connection.
 Every 30 seconds, it checks the connection back to the _TestMyInter.net_ server,
