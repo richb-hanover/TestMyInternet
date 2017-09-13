@@ -8,7 +8,7 @@ var moment = require('moment');
 export function LogToWindow(text, date = new Date()) {
   const textarea = document.getElementById("LogArea");
   const curtext = textarea.value;
-  const dateStr = moment().format('MM/DD/YYYY, hh:mm:ss A'); 
+  const dateStr = moment(date).format('MM/DD/YYYY, hh:mm:ss A'); 
   textarea.value = (curtext + dateStr + " " + text + "\n");
   textarea.scrollTop = textarea.scrollHeight;
 }
@@ -30,7 +30,7 @@ export function RestoreLogArea() {
     LogToWindow(`Starting TestMyInter.net ${versionInfo}`);
   }
   else {
-    LogToWindow(`----: Testing resumed with ${versionInfo}`);
+    LogToWindow(`Resumed with ${versionInfo}`);
   }
 }
 
@@ -39,7 +39,7 @@ export function SaveLogArea() {
   var str = "";
 
   if (document.getElementById("LogArea").value !== "") {
-    LogToWindow('----: Testing paused...');
+    LogToWindow('Paused...');
   }
   if (typeof(Storage) !== "undefined") {
     str = document.getElementById("LogArea").value;
