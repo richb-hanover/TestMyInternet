@@ -1,8 +1,8 @@
 ### The _Test My Internet_ Story...
 
 People always gripe to me that their Internet is terrible - it goes up and down "all the time".
-But when I ask how often, they say, "I'm not sure... yesterday morning, 
-and maybe it was last Tuesday..." 
+But when I ask how often, they really don't know. 
+They say, "I'm not sure... I think yesterday morning, and maybe also last Tuesday..." 
 Even if their ISP wanted to be helpful, I know that vague information won't be helpful
 for resolving the problem.
 
@@ -26,4 +26,5 @@ I've been using this, but I have some requests for testers:
 
 Thanks again.
 
-For more info or to let me know of problems, send a note to [richb.hanover@gmail.com.](mailto:richb.hanover+testmyinternet@gmail.com)
+[Send me a note](mailto:richb.hanover+testmyinternet@gmail.com) 
+if you have questions or problems! -- Rich Brown

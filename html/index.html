@@ -1,99 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>Test My Internet</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <title>Test My Internet</title>
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/jumbotron-narrow.css" rel="stylesheet">
-    <link href="css/flex.css" rel="stylesheet">
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-    <!-- Code to make zero-md markdown stunt work... -->
-    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v0.7.15/webcomponents-lite.min.js"></script>
-    <link rel="import" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/build/zero-md.html">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/markdown-themes/default.css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/highlight-themes/default.css">
+  <!-- Custom styles for this template -->
+  <link href="css/jumbotron-narrow.css" rel="stylesheet">
+  <link href="css/flex.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--
+  <!-- Code to make zero-md markdown stunt work... -->
+  <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v0.7.15/webcomponents-lite.min.js"></script>
+  <link rel="import" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/build/zero-md.html">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/markdown-themes/default.css">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/zerodevx/zero-md/v0.2.0/highlight-themes/default.css">
+
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--
       <! - -[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]- - >
       <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
     -->
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body>
+<body>
 
 
-    <div class="container">
-      
-      <header class="fitem">Test My Internet
-        <span id="spinner" >
-            <i>Testing... </i><i class="fa fa-refresh fa-spin fa-fw fa-inverse"></i>
-            <span class="sr-only">Refreshing...</span>
-        </span>
-      </header>
+  <div class="container">
 
-      <div id="hosts"></div>
+    <header class="fitem">Test My Internet
+      <span id="spinner">
+        <i>Testing... </i><i class="fa fa-refresh fa-spin fa-fw fa-inverse"></i>
+        <span class="sr-only">Refreshing...</span>
+      </span>
+    </header>
 
-      <textarea id="LogArea"></textarea>
+    <div id="hosts"></div>
 
-      <hr />
-      
-      <!-- Edit your Markdown URL file location here -->
-      <zero-md file="/About.md">
-        <div class="md-html"></div>
-      </zero-md>
+    <textarea id="LogArea"></textarea>
 
-      <footer >
-        <div>
-          <span>&copy; 2017, Blueberry Hill Software </span>   
-          <span id="version">%%GULP_INJECT_VERSION%%</span>
-        </div>
-      </footer>
+    <hr />
 
-    </div> <!-- /container -->
+    <!-- Edit your Markdown URL file location here -->
+    <zero-md file="/About.md">
+      <div class="md-html"></div>
+    </zero-md>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://use.fontawesome.com/123ae2721d.js"></script>
-<script src="./TestMyInternet.js"></script>
+    <footer>
+      <div>
+        <span>&copy; 2017-2019, Blueberry Hill Software </span>
+        <span id="version">%%GULP_INJECT_VERSION%%</span>
+      </div>
+    </footer>
 
-<!-- Piwik -->
-<script type="text/javascript">
-  var _paq = _paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//piwik.richb-hanover.com/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', '4']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-<noscript><p><img src="//piwik.richb-hanover.com/piwik.php?idsite=4&rec=1" style="border:0;" alt="" /></p></noscript>
-<!-- End Piwik Code -->
+  </div> <!-- /container -->
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <!-- script src="../../assets/js/ie10-viewport-bug-workaround.js"></script -->
-  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/123ae2721d.js"></script>
+  <script src="./TestMyInternet.js"></script>
+
+  <!-- Piwik -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+      var u = "//piwik.richb-hanover.com/";
+      _paq.push(['setTrackerUrl', u + 'piwik.php']);
+      _paq.push(['setSiteId', '4']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'piwik.js'; s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  <noscript>
+    <p><img src="//piwik.richb-hanover.com/piwik.php?idsite=4&rec=1" style="border:0;" alt="" /></p>
+  </noscript>
+  <!-- End Piwik Code -->
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <!-- script src="../../assets/js/ie10-viewport-bug-workaround.js"></script -->
+</body>
+
 </html>

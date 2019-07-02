@@ -19,7 +19,7 @@ header.onclick = () => {
     consolelog("Already testing...");
   }
   else {
-    consolelog("Manual check...");
+    consolelog("Manual check...")
     UpdateHosts();  
   }
 };

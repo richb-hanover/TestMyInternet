@@ -1,8 +1,14 @@
 
 
 // LogCompletion() - completion routine for CheckAlive xhr request
-// clears the timer and
-// resolves the promise, providing the text response
+// Params: 
+//    text - the text of the event (load, error, abort, timeout)
+//    timer - the setTimeout function
+//    resolve - the promise's resolve() function
+// Actions:
+//    clear the timer (if any)
+//    resolves the promise, providing the text response
+
 function LogCompletion(text, timer, resolve ) {
   if (timer) {
     clearTimeout(timer);
@@ -13,7 +19,7 @@ function LogCompletion(text, timer, resolve ) {
 
 // CheckAlive(host) - send a http query to the named host
 // Detect whether it timed out (non-responsive) or returned some other
-//    response/error (most likely will give CORS error, which also means it's up)
+//    response/error (most likely will give CORS error, which also means it's up/working)
 // See also: https://italonascimento.github.io/applying-a-timeout-to-your-promises/
 
 // Note: Using carefully-crafted XMLHttpRequest function for the request because
